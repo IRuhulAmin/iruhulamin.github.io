@@ -1,487 +1,490 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth dark">
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!--========== TAILWIND CSS ==========-->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        darkBg: '#090d16',
-                        cardBg: '#111827',
-                        accentBlue: '#38bdf8',
-                        accentIndigo: '#6366f1',
-                    },
-                    animation: {
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'float': 'float 6s ease-in-out infinite',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <!--========== BOX ICONS ==========-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 
-    <!--========== BOX ICONS & GOOGLE FONTS ==========-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!--========== CSS ==========-->
+    <link rel="stylesheet" href="./assets/css/resume.css">
 
-    <title>Ruhul Amin | Elite Android & Software Engineer</title>
-
-    <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .glass-panel {
-            background: rgba(17, 24, 39, 0.7);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .light .glass-panel {
-            background: rgba(255, 255, 255, 0.85);
-            border: 1px solid rgba(0, 0, 0, 0.06);
-        }
-        .glow-effect:hover {
-            box-shadow: 0 0 25px rgba(56, 189, 248, 0.25);
-        }
-    </style>
+    <title>Ruhul Amin Portfolio</title>
 </head>
 
-<body class="bg-darkBg text-slate-100 transition-colors duration-500 antialiased selection:bg-sky-500 selection:text-white relative overflow-x-hidden">
+<body>
+    <!--========== HEADER ==========-->
+    <header class="l-header" id="header">
+        <nav class="nav bd-container">
+            <a href="#" class="nav__LOGO">Ruhul Amin</a>
 
-    <!-- Ambient Glow Background Blobs -->
-    <div class="absolute top-0 left-1/4 w-96 h-96 bg-blue-600/15 rounded-full blur-3xl pointer-events-none animate-pulse-slow"></div>
-    <div class="absolute top-1/3 right-10 w-96 h-96 bg-indigo-600/15 rounded-full blur-3xl pointer-events-none animate-pulse-slow"></div>
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a href="#home" class="nav__link active-link">
+                            <i class='bx bx-home nav__icon'></i>Home
+                        </a>
+                    </li>
 
-    <!--========== HEADER / NAVBAR ==========-->
-    <header class="sticky top-0 z-50 glass-panel border-b border-slate-800/50">
-        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="#home" class="text-xl font-extrabold tracking-tight flex items-center gap-2">
-                <span class="w-3 h-3 rounded-full bg-sky-400 animate-ping"></span>
-                <span class="bg-gradient-to-r from-sky-400 via-indigo-400 to-purple-500 bg-clip-text text-transparent">Ruhul.dev</span>
-            </a>
+                    <li class="nav__item">
+                        <a href="#profile" class="nav__link">
+                            <i class='bx bx-user nav__icon'></i>Profile
+                        </a>
+                    </li>
 
-            <!-- Navigation Links -->
-            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
-                <a href="#home" class="hover:text-sky-400 transition-colors">Home</a>
-                <a href="#profile" class="hover:text-sky-400 transition-colors">About</a>
-                <a href="#skills" class="hover:text-sky-400 transition-colors">Tech Stack</a>
-                <a href="#experience" class="hover:text-sky-400 transition-colors">Experience</a>
-                <a href="#references" class="hover:text-sky-400 transition-colors">Projects</a>
-            </nav>
+                    <li class="nav__item">
+                        <a href="#education" class="nav__link">
+                            <i class='bx bx-book nav__icon'></i>Education
+                        </a>
+                    </li>
 
-            <div class="flex items-center space-x-4">
-                <!-- Theme Toggle Button -->
-                <button id="theme-button" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white transition-all shadow-inner">
-                    <i class='bx bx-sun text-lg' id="theme-icon"></i>
-                </button>
-                <a href="#references" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 text-white text-sm font-bold shadow-lg shadow-sky-500/20 hover:scale-105 transition-all">
-                    <span>Hire Me</span> <i class='bx bx-right-arrow-alt'></i>
-                </a>
-            </div>
-        </div>
-    </header>
+                    <li class="nav__item">
+                        <a href="#skills" class="nav__link">
+                            <i class='bx bx-receipt'></i>Skills
+                        </a>
+                    </li>
 
-    <!--========== MAIN CONTAINER ==========-->
-    <main class="max-w-6xl mx-auto px-6 py-12">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <li class="nav__item">
+                        <a href="#experience" class="nav__link">
+                            <i class='bx bx-briefcase-alt nav__icon'></i>Experience
+                        </a>
+                    </li>
 
-            <!-- LEFT COLUMN (Profile Sidebar - Span 4) -->
-            <div class="lg:col-span-4 space-y-6">
-                
-                <!-- HERO CARD -->
-                <section id="home" class="glass-panel p-8 rounded-3xl text-center relative overflow-hidden group">
-                    <div class="absolute inset-0 bg-gradient-to-b from-sky-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-                    
-                    <div class="relative inline-block mx-auto mb-5">
-                        <div class="absolute -inset-1.5 bg-gradient-to-r from-sky-400 to-indigo-600 rounded-full blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
-                        <img src="./assets/img/ruhul.jpg" class="relative w-36 h-36 rounded-full object-cover border-4 border-slate-900 shadow-2xl animate-float" alt="Ruhul Amin">
-                    </div>
+                    <li class="nav__item">
+                        <a href="#certificate" class="nav__link">
+                            <i class='bx bx-award nav__icon'></i>Certificate
+                        </a>
+                    </li>
 
-                    <h1 class="text-2xl font-black tracking-tight text-white">Ruhul Amin</h1>
-                    <div class="inline-block mt-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-bold uppercase tracking-wider">
-                        Android & Fullstack Engineer
-                    </div>
+                    <li class="nav__item">
+                        <a href="#references" class="nav__link">
+                            <i class='bx bx-link-external nav__icon'></i>References
+                        </a>
+                    </li>
+                </ul>
+            </div>
 
-                    <div class="mt-6 space-y-3 text-left text-sm pt-6 border-t border-slate-800/60">
-                        <div class="flex items-center gap-3 text-slate-300">
-                            <div class="w-8 h-8 rounded-lg bg-sky-500/10 flex items-center justify-center text-sky-400"><i class='bx bx-map text-base'></i></div>
-                            <span class="truncate">Khulna, Bangladesh</span>
-                        </div>
-                        <div class="flex items-center gap-3 text-slate-300">
-                            <div class="w-8 h-8 rounded-lg bg-sky-500/10 flex items-center justify-center text-sky-400"><i class='bx bx-envelope text-base'></i></div>
-                            <span class="truncate text-xs">ruhulewb@gmail.com</span>
-                        </div>
-                        <div class="flex items-center gap-3 text-slate-300">
-                            <div class="w-8 h-8 rounded-lg bg-sky-500/10 flex items-center justify-center text-sky-400"><i class='bx bx-phone text-base'></i></div>
-                            <span>+88017...</span>
-                        </div>
-                    </div>
+            <div class="nav__toggle" id="nav-toggle">
+                <i class='bx bx-grid-alt'></i>
+            </div>
+        </nav>
+    </header>
 
-                    <div class="mt-6">
-                        <a download href="./assets/pdf/ResumeCv.pdf" class="w-full flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-white text-sm font-bold py-3 px-4 rounded-2xl border border-slate-700 shadow-md transition-all">
-                            <i class='bx bx-download text-lg'></i> Download Resume
-                        </a>
-                    </div>
-                </section>
 
-                <!-- SOCIAL DOCK -->
-                <section class="glass-panel p-6 rounded-3xl">
-                    <h2 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4">Connect Online</h2>
-                    <div class="grid grid-cols-3 gap-3">
-                        <a href="https://www.linkedin.com/in/ruhul-amin-3850a82b9" target="_blank" class="p-3 rounded-2xl bg-slate-800/60 hover:bg-sky-600/20 hover:border-sky-500 border border-slate-700/60 flex flex-col items-center justify-center gap-1 transition-all group">
-                            <i class='bx bxl-linkedin-square text-2xl text-sky-400 group-hover:scale-110 transition-transform'></i>
-                            <span class="text-[10px] font-semibold text-slate-300">LinkedIn</span>
-                        </a>
-                        <a href="https://twitter.com/" target="_blank" class="p-3 rounded-2xl bg-slate-800/60 hover:bg-sky-600/20 hover:border-sky-500 border border-slate-700/60 flex flex-col items-center justify-center gap-1 transition-all group">
-                            <i class='bx bxl-twitter text-2xl text-sky-400 group-hover:scale-110 transition-transform'></i>
-                            <span class="text-[10px] font-semibold text-slate-300">Twitter</span>
-                        </a>
-                        <a href="https://www.instagram.com/codewithruhan/" target="_blank" class="p-3 rounded-2xl bg-slate-800/60 hover:bg-pink-600/20 hover:border-pink-500 border border-slate-700/60 flex flex-col items-center justify-center gap-1 transition-all group">
-                            <i class='bx bxl-instagram text-2xl text-pink-400 group-hover:scale-110 transition-transform'></i>
-                            <span class="text-[10px] font-semibold text-slate-300">Instagram</span>
-                        </a>
-                    </div>
-                </section>
+    <main class="l-main bd-container">
+        <!-- All elements within this div, is generated in PDF -->
+        <div class="resume" id="area-cv">
 
-                <!-- EDUCATION TIMELINE -->
-                <section id="education" class="glass-panel p-6 rounded-3xl">
-                    <h2 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-5">Education</h2>
-                    <div class="space-y-6 border-l-2 border-sky-500/30 pl-4 ml-2">
-                        <div class="relative">
-                            <span class="absolute -left-[21px] top-1.5 w-3 h-3 bg-sky-400 rounded-full border-2 border-slate-900 shadow"></span>
-                            <span class="text-[11px] text-sky-400 font-bold">2020 - PRESENT</span>
-                            <h3 class="font-bold text-sm text-white mt-0.5">NUBTK</h3>
-                            <p class="text-xs text-slate-400">B.Sc. in Computer Science & Engineering</p>
-                        </div>
-                        <div class="relative">
-                            <span class="absolute -left-[21px] top-1.5 w-3 h-3 bg-slate-600 rounded-full border-2 border-slate-900"></span>
-                            <span class="text-[11px] text-slate-400 font-bold">2015 - 2019</span>
-                            <h3 class="font-bold text-sm text-white mt-0.5">Khulna Polytechnic Institute</h3>
-                            <p class="text-xs text-slate-400">Diploma in Computer Technology</p>
-                        </div>
-                        <div class="relative">
-                            <span class="absolute -left-[21px] top-1.5 w-3 h-3 bg-slate-600 rounded-full border-2 border-slate-900"></span>
-                            <span class="text-[11px] text-slate-400 font-bold">2015</span>
-                            <h3 class="font-bold text-sm text-white mt-0.5">KBKSS</h3>
-                            <p class="text-xs text-slate-400">Secondary Education</p>
-                        </div>
-                    </div>
-                </section>
+            <div class="resume__left">
+                <!--========== HOME ==========-->
+                <section class="home" id="home">
+                    <div class="home__container section bd-grid">
+                        <div class="home__data bd-grid">
+                            <img src="./assets/img/ruhul.jpg" class="home__img" alt="">
 
-                <!-- LANGUAGES & INTERESTS -->
-                <section class="glass-panel p-6 rounded-3xl space-y-6">
-                    <div>
-                        <h2 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">Languages</h2>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-sky-500/10 border border-sky-500/20 text-sky-300 text-xs rounded-xl font-medium">Bengali (Native)</span>
-                            <span class="px-3 py-1 bg-sky-500/10 border border-sky-500/20 text-sky-300 text-xs rounded-xl font-medium">English</span>
-                            <span class="px-3 py-1 bg-sky-500/10 border border-sky-500/20 text-sky-300 text-xs rounded-xl font-medium">Hindi</span>
-                        </div>
-                    </div>
-                    <div>
-                        <h2 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">Interests</h2>
-                        <div class="grid grid-cols-2 gap-3 text-center">
-                            <div class="p-3 bg-slate-800/40 border border-slate-700/50 rounded-2xl flex flex-col items-center">
-                                <i class='bx bx-football text-xl text-sky-400 mb-1'></i>
-                                <span class="text-xs font-medium text-slate-300">Sports</span>
-                            </div>
-                            <div class="p-3 bg-slate-800/40 border border-slate-700/50 rounded-2xl flex flex-col items-center">
-                                <i class='bx bxs-plane-alt text-xl text-sky-400 mb-1'></i>
-                                <span class="text-xs font-medium text-slate-300">Travel</span>
-                            </div>
-                            <div class="p-3 bg-slate-800/40 border border-slate-700/50 rounded-2xl flex flex-col items-center">
-                                <i class='bx bx-code text-xl text-sky-400 mb-1'></i>
-                                <span class="text-xs font-medium text-slate-300">Code</span>
-                            </div>
-                            <div class="p-3 bg-slate-800/40 border border-slate-700/50 rounded-2xl flex flex-col items-center">
-                                <i class='bx bx-dumbbell text-xl text-sky-400 mb-1'></i>
-                                <span class="text-xs font-medium text-slate-300">Fitness</span>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                            <h1 class="home__title">Ruhul <b>Amin</b></h1>
+                            <h3 class="home__profession">Android Developer</h3>
 
-            </div>
+                            <!-- Button to generate and download the pdf. Available for desktop. -->
+                            <div>
+                                <a download="" href="./assets/pdf/ResumeCv.pdf" class="home__button-movil">Download</a>
+                            </div>
+                        </div>
 
-            <!-- RIGHT COLUMN (Content Workspace - Span 8) -->
-            <div class="lg:col-span-8 space-y-6">
+                        <div class="home__address bd-grid">
+                            <span class="home__information">
+                                <i class='bx bx-map home__icon'></i> Khalishpur - Khan Jahan Ali - Khulna - Bangladesh
+                            </span>
 
-                <!-- PROFILE BIO -->
-                <section id="profile" class="glass-panel p-8 rounded-3xl relative overflow-hidden">
-                    <div class="absolute right-0 top-0 w-48 h-48 bg-sky-500/5 rounded-full blur-2xl"></div>
-                    <h2 class="text-xl font-black text-white mb-4 flex items-center gap-3">
-                        <span class="w-2 h-6 bg-sky-400 rounded-full"></span> Profile Overview
-                    </h2>
-                    <p class="text-slate-300 leading-relaxed text-sm md:text-base font-normal">
-                        I am a deeply motivated developer committed to architectural performance and clean code design. Specializing in <span class="text-sky-400 font-semibold">Android App & Web Development</span>, I combine my Computer Technology diploma foundation with rigorous ongoing CSE academic insights to build robust, scalable mobile applications and digital environments.
-                    </p>
-                </section>
+                            <span class="home__information">
+                                <i class='bx bx-envelope home__icon'></i> ruhulewb@gmail.com
+                            </span>
 
-                <!-- SKILLS MATRIX -->
-                <section id="skills" class="glass-panel p-8 rounded-3xl">
-                    <h2 class="text-xl font-black text-white mb-6 flex items-center gap-3">
-                        <span class="w-2 h-6 bg-sky-400 rounded-full"></span> Technical Arsenal
-                    </h2>
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                        <div class="p-4 rounded-2xl bg-slate-800/50 border border-slate-700/60 flex flex-col items-center justify-center text-center hover:border-sky-500/50 transition-colors">
-                            <i class='bx bxl-android text-3xl text-emerald-400 mb-2'></i>
-                            <span class="text-xs font-bold text-slate-200">Java & Kotlin</span>
-                        </div>
-                        <div class="p-4 rounded-2xl bg-slate-800/50 border border-slate-700/60 flex flex-col items-center justify-center text-center hover:border-sky-500/50 transition-colors">
-                            <i class='bx bx-mobile text-3xl text-sky-400 mb-2'></i>
-                            <span class="text-xs font-bold text-slate-200">Android SDK</span>
-                        </div>
-                        <div class="p-4 rounded-2xl bg-slate-800/50 border border-slate-700/60 flex flex-col items-center justify-center text-center hover:border-sky-500/50 transition-colors">
-                            <i class='bx bxl-html5 text-3xl text-orange-400 mb-2'></i>
-                            <span class="text-xs font-bold text-slate-200">HTML & CSS</span>
-                        </div>
-                        <div class="p-4 rounded-2xl bg-slate-800/50 border border-slate-700/60 flex flex-col items-center justify-center text-center hover:border-sky-500/50 transition-colors">
-                            <i class='bx bxl-php text-3xl text-indigo-400 mb-2'></i>
-                            <span class="text-xs font-bold text-slate-200">PHP</span>
-                        </div>
-                        <div class="p-4 rounded-2xl bg-slate-800/50 border border-slate-700/60 flex flex-col items-center justify-center text-center hover:border-sky-500/50 transition-colors">
-                            <i class='bx bxl-python text-3xl text-yellow-400 mb-2'></i>
-                            <span class="text-xs font-bold text-slate-200">Python</span>
-                        </div>
-                        <div class="p-4 rounded-2xl bg-slate-800/50 border border-slate-700/60 flex flex-col items-center justify-center text-center hover:border-sky-500/50 transition-colors">
-                            <i class='bx bxl-bootstrap text-3xl text-purple-400 mb-2'></i>
-                            <span class="text-xs font-bold text-slate-200">Bootstrap</span>
-                        </div>
-                        <div class="p-4 rounded-2xl bg-slate-800/50 border border-slate-700/60 flex flex-col items-center justify-center text-center hover:border-sky-500/50 transition-colors">
-                            <i class='bx bxl-firebase text-3xl text-amber-400 mb-2'></i>
-                            <span class="text-xs font-bold text-slate-200">Firebase</span>
-                        </div>
-                        <div class="p-4 rounded-2xl bg-slate-800/50 border border-slate-700/60 flex flex-col items-center justify-center text-center hover:border-sky-500/50 transition-colors">
-                            <i class='bx bxl-github text-3xl text-slate-100 mb-2'></i>
-                            <span class="text-xs font-bold text-slate-200">GitHub</span>
-                        </div>
-                    </div>
-                </section>
+                            <span class="home__information">
+                                <i class='bx bx-phone home__icon'></i> +88017
+                            </span>
+                        </div>
 
-                <!-- EXPERIENCE TIMELINE -->
-                <section id="experience" class="glass-panel p-8 rounded-3xl">
-                    <h2 class="text-xl font-black text-white mb-6 flex items-center gap-3">
-                        <span class="w-2 h-6 bg-sky-400 rounded-full"></span> Experience
-                    </h2>
-                    <div class="space-y-6">
-                        <div class="p-6 rounded-2xl bg-slate-800/40 border border-slate-700/50 relative overflow-hidden">
-                            <div class="flex justify-between items-start flex-wrap gap-2 mb-2">
-                                <h3 class="font-bold text-base text-white">Skills and Training Enhancement Project (STEP)</h3>
-                                <span class="px-3 py-1 rounded-full bg-sky-500/10 text-sky-400 text-xs font-bold">Android Developer</span>
-                            </div>
-                            <p class="text-sm text-slate-300">
-                                Participated as a core team Android developer. Awarded official certifications for excellence at both the institute and regional levels.
-                            </p>
-                        </div>
-                        <div class="p-6 rounded-2xl bg-slate-800/40 border border-slate-700/50 relative overflow-hidden">
-                            <div class="flex justify-between items-start flex-wrap gap-2 mb-2">
-                                <h3 class="font-bold text-base text-white">People N Tech</h3>
-                                <span class="px-3 py-1 rounded-full bg-sky-500/10 text-sky-400 text-xs font-bold">Web Designer & Developer (Intern)</span>
-                            </div>
-                            <p class="text-sm text-slate-300">
-                                Contributed high-impact web design implementations, optimizing asset architecture and driving productivity benchmarks.
-                            </p>
-                        </div>
-                    </div>
-                </section>
+                    </div>
 
-                <!-- CERTIFICATES -->
-                <section id="certificate" class="glass-panel p-8 rounded-3xl">
-                    <h2 class="text-xl font-black text-white mb-6 flex items-center gap-3">
-                        <span class="w-2 h-6 bg-sky-400 rounded-full"></span> Certifications
-                    </h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="p-5 rounded-2xl bg-slate-800/40 border border-slate-700/50 flex flex-col justify-between">
-                            <div>
-                                <i class='bx bx-award text-2xl text-sky-400 mb-2'></i>
-                                <h3 class="font-bold text-sm text-white">Professional Web Development Specialist</h3>
-                                <p class="text-xs text-slate-400 mt-1">Awarded during internship tenure at a USA-based technical organization.</p>
-                            </div>
-                        </div>
-                        <div class="p-5 rounded-2xl bg-slate-800/40 border border-slate-700/50 flex flex-col justify-between">
-                            <div>
-                                <i class='bx bx-award text-2xl text-sky-400 mb-2'></i>
-                                <h3 class="font-bold text-sm text-white">STEP Regional Certificate</h3>
-                                <p class="text-xs text-slate-400 mt-1">Recognized for high performance in government skill development initiatives.</p>
-                            </div>
-                        </div>
-                        <div class="p-5 rounded-2xl bg-slate-800/40 border border-slate-700/50 md:col-span-2 flex flex-col justify-between">
-                            <div>
-                                <i class='bx bx-trophy text-2xl text-amber-400 mb-2'></i>
-                                <h3 class="font-bold text-sm text-white">STEP Institute Level - 2nd Position</h3>
-                                <p class="text-xs text-slate-400 mt-1">Secured runner-up position for innovative app creation under institutional competition guidelines.</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                    <!-- Theme change button -->
+                    <i class='bx bx-moon change-theme' title="Theme" id="theme-button"></i>
 
-                <!-- PROJECTS SHOWCASE -->
-                <section id="references" class="glass-panel p-8 rounded-3xl">
-                    <h2 class="text-xl font-black text-white mb-6 flex items-center gap-3">
-                        <span class="w-2 h-6 bg-sky-400 rounded-full"></span> Featured Projects & Apps
-                    </h2>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        
-                        <!-- Project Card -->
-                        <div class="p-5 rounded-2xl bg-slate-800/50 border border-slate-700/60 hover:border-sky-500 transition-all group flex flex-col justify-between glow-effect">
-                            <div>
-                                <div class="flex items-center justify-between mb-2">
-                                    <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-sky-500/10 text-sky-400">Web App</span>
-                                    <i class='bx bx-globe text-xl text-slate-400 group-hover:text-sky-400 transition-colors'></i>
-                                </div>
-                                <h3 class="font-bold text-base text-white">napitchai.com</h3>
-                                <p class="text-xs text-slate-400 mt-1">Fully functional web ecosystem with native Android application integration coming soon.</p>
-                            </div>
-                            <div class="mt-4 pt-3 border-t border-slate-700/50 flex justify-between items-center">
-                                <a href="https://napitchai.com/" target="_blank" class="text-xs font-bold text-sky-400 hover:underline flex items-center gap-1">Launch Live App <i class='bx bx-link-external'></i></a>
-                            </div>
-                        </div>
 
-                        <div class="p-5 rounded-2xl bg-slate-800/50 border border-slate-700/60 hover:border-sky-500 transition-all group flex flex-col justify-between glow-effect">
-                            <div>
-                                <div class="flex items-center justify-between mb-2">
-                                    <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400">Android App</span>
-                                    <i class='bx bxl-android text-xl text-slate-400 group-hover:text-emerald-400 transition-colors'></i>
-                                </div>
-                                <h3 class="font-bold text-base text-white">Bluetooth Call App</h3>
-                                <p class="text-xs text-slate-400 mt-1">Decentralized communication utility engineered for peer connections over Bluetooth radio waves.</p>
-                            </div>
-                            <div class="mt-4 pt-3 border-t border-slate-700/50 flex justify-between items-center">
-                                <a href="https://iruhulamin.github.io/myapp.html" target="_blank" class="text-xs font-bold text-sky-400 hover:underline flex items-center gap-1">Repository / APK <i class='bx bx-link-external'></i></a>
-                            </div>
-                        </div>
+                    <!-- Button to generate and download the pdf. Available for desktop. -->
+                    <i class='bx bx-download generate-pdf' title="Generate PDF" id="resume-button"></i>
 
-                        <div class="p-5 rounded-2xl bg-slate-800/50 border border-slate-700/60 hover:border-sky-500 transition-all group flex flex-col justify-between glow-effect">
-                            <div>
-                                <div class="flex items-center justify-between mb-2">
-                                    <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400">Android App</span>
-                                    <i class='bx bxl-android text-xl text-slate-400 group-hover:text-emerald-400 transition-colors'></i>
-                                </div>
-                                <h3 class="font-bold text-base text-white">Cinema Booking App</h3>
-                                <p class="text-xs text-slate-400 mt-1">Interactive seat reservation layout logic and dynamic showtime ticket booking interface.</p>
-                            </div>
-                            <div class="mt-4 pt-3 border-t border-slate-700/50 flex justify-between items-center">
-                                <a href="https://iruhulamin.github.io/myapp.html" target="_blank" class="text-xs font-bold text-sky-400 hover:underline flex items-center gap-1">Repository / APK <i class='bx bx-link-external'></i></a>
-                            </div>
-                        </div>
+                </section>
 
-                        <div class="p-5 rounded-2xl bg-slate-800/50 border border-slate-700/60 hover:border-sky-500 transition-all group flex flex-col justify-between glow-effect">
-                            <div>
-                                <div class="flex items-center justify-between mb-2">
-                                    <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-sky-500/10 text-sky-400">Google Play</span>
-                                    <i class='bx bxl-play-store text-xl text-slate-400 group-hover:text-sky-400 transition-colors'></i>
-                                </div>
-                                <h3 class="font-bold text-base text-white">InfoApp</h3>
-                                <p class="text-xs text-slate-400 mt-1">Live information dissemination application published directly on the Google Play Store.</p>
-                            </div>
-                            <div class="mt-4 pt-3 border-t border-slate-700/50 flex justify-between items-center">
-                                <a href="https://play.google.com/store/apps/details?id=com.my.infoapp" target="_blank" class="text-xs font-bold text-sky-400 hover:underline flex items-center gap-1">Play Store Link <i class='bx bx-link-external'></i></a>
-                            </div>
-                        </div>
+                <!--========== SOCIAL ==========-->
+                <section class="social section">
+                    <h2 class="section-title">SOCIAL</h2>
 
-                        <div class="p-5 rounded-2xl bg-slate-800/50 border border-slate-700/60 hover:border-sky-500 transition-all group flex flex-col justify-between glow-effect">
-                            <div>
-                                <div class="flex items-center justify-between mb-2">
-                                    <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-purple-500/10 text-purple-400">Mobile Game</span>
-                                    <i class='bx bx-joystick text-xl text-slate-400 group-hover:text-purple-400 transition-colors'></i>
-                                </div>
-                                <h3 class="font-bold text-base text-white">Catch Coins Game</h3>
-                                <p class="text-xs text-slate-400 mt-1">Arcade casual mobile game experience focused on reflex-based reward physics.</p>
-                            </div>
-                            <div class="mt-4 pt-3 border-t border-slate-700/50 flex justify-between items-center">
-                                <a href="https://play.google.com/store/apps/details?id=com.my.catchcoins" target="_blank" class="text-xs font-bold text-sky-400 hover:underline flex items-center gap-1">Play Store Link <i class='bx bx-link-external'></i></a>
-                            </div>
-                        </div>
+                    <div class="social__container bd-grid">
+                        <a href="https://www.linkedin.com/in/ruhul-amin-3850a82b9" target="_blank"
+                            class="social__link">
+                            <i class='bx bxl-linkedin-square social__icon'></i> Ruhul Amin
+                        </a>
 
-                        <div class="p-5 rounded-2xl bg-slate-800/50 border border-slate-700/60 hover:border-sky-500 transition-all group flex flex-col justify-between glow-effect">
-                            <div>
-                                <div class="flex items-center justify-between mb-2">
-                                    <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-yellow-500/10 text-yellow-400">Python AI Script</span>
-                                    <i class='bx bxl-python text-xl text-slate-400 group-hover:text-yellow-400 transition-colors'></i>
-                                </div>
-                                <h3 class="font-bold text-base text-white">Virtual Assistant (Google/Siri Clone)</h3>
-                                <p class="text-xs text-slate-400 mt-1">Python-driven speech detection assistant executing task scripts via audio commands.</p>
-                            </div>
-                            <div class="mt-4 pt-3 border-t border-slate-700/50 flex justify-between items-center">
-                                <span class="text-[11px] text-slate-400 font-medium">Python Runtime</span>
-                            </div>
-                        </div>
+                        <a href="https://twitter.com/" target="_blank" class="social__link">
+                            <i class='bx bxl-twitter social__icon'></i> Ruhul Amin
+                        </a>
 
-                        <div class="p-5 rounded-2xl bg-slate-800/50 border border-slate-700/60 hover:border-sky-500 transition-all group flex flex-col justify-between glow-effect">
-                            <div>
-                                <div class="flex items-center justify-between mb-2">
-                                    <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400">Kotlin App</span>
-                                    <i class='bx bx-code-block text-xl text-slate-400 group-hover:text-emerald-400 transition-colors'></i>
-                                </div>
-                                <h3 class="font-bold text-base text-white">A Ticket Booking System</h3>
-                                <p class="text-xs text-slate-400 mt-1">Streamlined booking logic architecture written using Kotlin programming language.</p>
-                            </div>
-                            <div class="mt-4 pt-3 border-t border-slate-700/50 flex justify-between items-center">
-                                <span class="text-[11px] text-slate-400 font-medium">Native Kotlin</span>
-                            </div>
-                        </div>
+                        <a href="https://www.instagram.com/codewithruhan/" target="_blank" class="social__link">
+                            <i class='bx bxl-instagram social__icon'></i> codewithruhan
+                        </a>
+                    </div>
+                </section>
 
-                        <div class="p-5 rounded-2xl bg-slate-800/50 border border-slate-700/60 hover:border-sky-500 transition-all group flex flex-col justify-between glow-effect">
-                            <div>
-                                <div class="flex items-center justify-between mb-2">
-                                    <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-sky-500/10 text-sky-400">Web Tool</span>
-                                    <i class='bx bx-laptop text-xl text-slate-400 group-hover:text-sky-400 transition-colors'></i>
-                                </div>
-                                <h3 class="font-bold text-base text-white">kktype WebApp</h3>
-                                <p class="text-xs text-slate-400 mt-1">Lightweight utility deployment for web asset parsing and interaction handling.</p>
-                            </div>
-                            <div class="mt-4 pt-3 border-t border-slate-700/50 flex justify-between items-center">
-                                <a href="https://iruhulamin.github.io/kktype/" target="_blank" class="text-xs font-bold text-sky-400 hover:underline flex items-center gap-1">Open App <i class='bx bx-link-external'></i></a>
-                            </div>
-                        </div>
+                <!--========== PROFILE ==========-->
+                <section class="profile section" id="profile">
+                    <h2 class="section-title">Profile</h2>
 
-                    </div>
-                </section>
+                    <p class="profile__description">I am a person responsible with the works during working hours.
+                        Finish various technical works (such as android app/ios app/web developments) and also completed my diploma in Computer Technology and currently studying CSE in an university. I have several years of
+                        experience and achievements in the field of android app development</p>
+                </section>
 
-            </div>
+                <!--========== EDUCATION ==========-->
+                <section class="education section" id="education">
+                    <h2 class="section-title">Education</h2>
 
-        </div>
-    </main>
+                    <div class="education__container bd-grid">
+                        <div class="education__content">
+                            <div class="education__time">
+                                <span class="education__rounder"></span>
+                                <span class="education__line"></span>
+                            </div>
 
-    <!--========== FOOTER ==========-->
-    <footer class="max-w-6xl mx-auto px-6 py-12 text-center text-xs text-slate-400 border-t border-slate-800/60 mt-16 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p>&copy; 2026 Ruhul Amin. Engineered for ultimate modern performance.</p>
-        <a href="#home" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition-colors flex items-center gap-1">
-            <span>Back to top</span> <i class='bx bx-up-arrow-alt'></i>
-        </a>
-    </footer>
+                            <div class="education__data bd-grid">
+                                <h3 class="education__title">University: NUBTK</h3>
+                                <span class="education__studies">CSE</span>
+                                <span class="eductaion__year">2020 - continuing</span>
+                            </div>
+                        </div>
 
-    <!--========== INTERACTIVE JS ==========-->
-    <script>
-        const themeButton = document.getElementById('theme-button');
-        const themeIcon = document.getElementById('theme-icon');
-        const bodyElement = document.body;
+                        <div class="education__content">
+                            <div class="education__time">
+                                <span class="education__rounder"></span>
+                                <span class="education__line"></span>
+                            </div>
 
-        themeButton.addEventListener('click', () => {
-            bodyElement.classList.toggle('dark');
-            bodyElement.classList.toggle('light');
-            
-            if (bodyElement.classList.contains('dark')) {
-                themeIcon.className = 'bx bx-sun text-lg';
-                document.documentElement.classList.add('dark');
-            } else {
-                themeIcon.className = 'bx bx-moon text-lg';
-                document.documentElement.classList.remove('dark');
-            }
-        });
-    </script>
+                            <div class="education__data bd-grid">
+                                <h3 class="education__title">College: Khulna Polytechnic Institute</h3>
+                                <span class="education__studies">Diploma in Computer Technology</span>
+                                <span class="eductaion__year">2015 - 2019</span>
+                            </div>
+                        </div>
+
+                        <div class="education__content">
+                            <div class="education__time">
+                                <span class="education__rounder"></span>
+                                <!-- <span class="education__line"></span> -->
+                            </div>
+
+                            <div class="education__data bd-grid">
+                                <h3 class="education__title">School: KBKSS</h3>
+                                <span class="education__studies">KBKSS</span>
+                                <span class="eductaion__year">2015</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <!--========== SKILLS  ==========-->
+                <section class="skills section" id="skills">
+                    <h2 class="section-title">Skills</h2>
+
+                    <div class="skills__content bd-grid">
+
+                        <ul class="skills__data">
+                            <li class="skill__name">
+                                <span class="skills__circle"></span> Java and Kotlin
+                            </li>
+
+                            <li class="skill__name">
+                                <span class="skills__circle"></span> Android
+                            </li>
+
+                            <li class="skill__name">
+                                <span class="skills__circle"></span>Html & Css
+                            </li>
+
+                            <li class="skill__name">
+                                <span class="skills__circle"></span> PHP
+                            </li>
+                        </ul>
+
+
+                        <ul class="skills__data">
+                            <li class="skill__name">
+                                <span class="skills__circle"></span> Python
+                            </li>
+
+                            <li class="skill__name">
+                                <span class="skills__circle"></span> Bootstrap
+                            </li>
+
+                            <li class="skill__name">
+                                <span class="skills__circle"></span> Firebase
+                            </li>
+
+                            <li class="skill__name">
+                                <span class="skills__circle"></span> Github
+                            </li>
+
+                        </ul>
+
+
+                    </div>
+                </section>
+
+            </div>
+
+
+
+
+
+
+
+            <div class="resume__right">
+                <!--========== EXPERIENCE ==========-->
+                <section class="experience section" id="experience">
+                    <h2 class="section-title">Experience</h2>
+
+                    <div class="experience__container bd-grid">
+
+                        <div class="experience__content">
+                            <div class="experience__time">
+                                <span class="experience__rounder"></span>
+                                <span class="experience__line"></span>
+                            </div>
+
+                            <div class="experience__data bd-grid">
+                                <h3 class="experience__title">Skills and Training Enhancement Project (STEP)</h3>
+                                <span class="experience__company">Android App developer</span>
+                                <p class="experience__description">I have perticipated here as an android developer with my team.I have certified for that for both the institute ;evel and regional level.</p>
+                            </div>
+                        </div>
+
+                        <div class="experience__content">
+                            <div class="experience__time">
+                                <span class="experience__rounder"></span>
+                                <span class="experience__line"></span>
+                            </div>
+
+                            <div class="experience__data bd-grid">
+                                <h3 class="experience__title">People N Tech</h3>
+                                <span class="experience__company">Web Designer & Developer</span>
+                                <p class="experience__description">Work in this field as an intern dedicating the best
+                                    responsiblity in the area that corresponds, delivering the best results for the
+                                    app development and improving productivity.</p>
+                            </div>
+                        </div>
+
+                        <div class="experience__content">
+                            <div class="experience__time">
+                                <span class="experience__rounder"></span>
+                                <span class="experience__line"></span>
+                            </div>
+
+<!--                             <div class="experience__data bd-grid">
+                                <h3 class="experience__title">Australian Organization</h3>
+                                <span class="experience__company">Web Apps</span>
+                                <p class="experience__description">Work in this field as dedicating developer,who has the best
+                                    responsiblity in the area that corresponds, delivering the best results for the
+                                    app development and improving productivity.</p>
+                            </div> -->
+                        </div>
+
+                       
+                </section>
+
+                <!--========== CERTIFICATES ==========-->
+                <section class="certificate section" id="certificates">
+                    <h2 class="section-title">Certificates</h2>
+
+                    <div class="certificate__container bd-grid">
+                        <div class="certificate__content">
+                            <h3 class="certificate__title">Professional Web development Specialist</h3>
+                            <p class="certificate__description">for work as an intern in this USA based organization</p>
+                        </div>
+
+                        <div class="certificate__content">
+                            <h3 class="certificate__title">STEP Regional Certificate</h3>
+                            <p class="certificate__description">for taking part in Government Skill and Training Enhancement Projects. </p>
+                        </div>
+
+                        <div class="certificate__content">
+                            <h3 class="certificate__title">STEP Institute Certificate</h3>
+                            <p class="certificate__description">for taking part in Government Skill and Training Enhancement Projects and own second position</p>
+                        </div>
+                    </div>
+
+                </section>
+
+                <!--========== REFERENCES ==========-->
+                <section class="references section" id="references">
+                    <h2 class="section-title" href="https://iruhulamin.github.io/myapp.html" alt="click on projects for apk">Pojects</h2>
+
+                    <div class="references__container bd-grid">
+
+                         <div class="references__content bd-grid">
+                            <span class="references__subtitle">Web App, Android App coming soon</span>
+                            <h3 class="references__title">napitchai.com</h3>
+                            <ul class="references__contact">
+                                <li><a href="https://napitchai.com/" target="_blank"
+                            class="social__link">Address: NapitChai Web App</a></li>
+                                <li>Email : ruhulewb@email.com</li>
+                            </ul>
+                             
+                        <div class="references__content bd-grid">
+                            <span class="references__subtitle">Android OS, App</span>
+                            <h3 class="references__title">Bluetooth Call App</h3>
+                            <ul class="references__contact">
+                                <li><a href="https://iruhulamin.github.io/myapp.html" target="_blank"
+                            class="social__link">PlayStore Link: Github Link</a></li>
+                                <li>Email : ruhulewb@email.com</li>
+                            </ul>
+                     
+                        <div class="references__content bd-grid">
+                            <span class="references__subtitle">Android OS, App</span>
+                            <h3 class="references__title">Cinema Booking App</h3>
+                            <ul class="references__contact">
+                                <li><a href="https://iruhulamin.github.io/myapp.html" target="_blank"
+                            class="social__link">PlayStore Link: Github Link</a></li>
+                                <li>Email : ruhulewb@email.com</li>
+                            </ul>
+                        
+                    <div class="references__container bd-grid">
+                        <div class="references__content bd-grid">
+                            <span class="references__subtitle">Android OS, App</span>
+                            <h3 class="references__title">InfoApp</h3>
+                            <ul class="references__contact">
+                                <li><a href="https://play.google.com/store/apps/details?id=com.my.infoapp" target="_blank"
+                            class="social__link">PlayStore Link: InfoApp</a></li>
+                                <li>Email : ruhulewb@email.com</li>
+                            </ul>
+                        </div>
+
+                        <div class="references__content bd-grid">
+                            <span class="references__subtitle">Android OS, game app.</span>
+                            <h3 class="references__title">Catch Coins</h3>
+                            <ul class="references__contact">
+                                <li><a href="https://play.google.com/store/apps/details?id=com.my.catchcoins" target="_blank"
+                            class="social__link">PlayStore Link:Catch Coins </a></li>
+                                <li>Email : ruhulewb@email.com</li>
+                            </ul>
+                        </div>
+
+                        <div class="references__content bd-grid">
+                            <span class="references__subtitle">Meh VA</span>
+                            <h3 class="references__title">Clone Google and Siri Voice detection virtual Assistant</h3>
+                            <ul class="references__contact">
+                                <li>Developed using python programming language.</li>
+                                <li>Email : ruhulewb@email.com</li>
+                            </ul>
+                        </div>
+
+                         <div class="references__content bd-grid">
+                            <span class="references__subtitle">Booking App</span>
+                            <h3 class="references__title">A Ticket booking system</h3>
+                            <ul class="references__contact">
+                                <li>Developed using Kotlin programming language.</li>
+                                <li>Email : ruhulewb@email.com</li>
+                            </ul>
+                        </div>
+
+                        <div class="references__content bd-grid">
+                            <span class="references__subtitle">Web app</span>
+                            <h3 class="references__title">kktype WebApp</h3>
+                            <ul class="references__contact">
+                                <li><a href="https://iruhulamin.github.io/kktype/" target="_blank"
+                            class="social__link">kktype WebAppLink:kktype </a></li>
+                                <li>Email : ruhulewb@email.com</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!--========== LANGUAGES ==========-->
+                <section class="languages section">
+                    <h2 class="section-title">Languages</h2>
+
+                    <div class="languages__container">
+                        <ul class="languages__content bd-grid">
+                            <li class="languages__name">
+                                <span class="languages__circle"></span>Bengali
+                            </li>
+
+                            <li class="languages__name">
+                                <span class="languages__circle"></span>English
+                            </li>
+
+                            <li class="languages__name">
+                                <span class="languages__circle"></span>Hindi
+                            </li>
+
+                         
+                        </ul>
+                    </div>
+                </section>
+
+                 
+
+<br>
+<br>
+<br>
+
+
+                <!--========== INTERESTS ==========-->
+                <section class="interests section">
+                    <h2 class="section-title">Interests</h2>
+
+                    <div class="intrests__container bd-grid">
+                        <div class="intrests__contnet">
+                            <i class='bx bx-football intrests__icon'></i>
+                            <span class="intrests__name">Sports</span>
+                        </div>
+
+                        <div class="intrests__contnet">
+                            <i class='bx bxs-plane-alt intrests__icon'></i>
+                            <span class="intrests__name">Travel</span>
+                        </div>
+
+                        <div class="intrests__contnet">
+                            <i class='bx bx-code intrests__icon'></i>
+                            <span class="intrests__name">Code</span>
+                        </div>
+
+                        <div class="intrests__contnet">
+                            <i class='bx bx-dumbbell intrests__icon'></i>
+                            <span class="intrests__name">Fitness</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!--========== SCROLL TOP ==========-->
+    <a href="#" class="scrolltop" id="scroll-top">
+        <i class='bx bx-up-arrow-alt scrolltop__icon'></i>
+    </a>
+
+
+
+
+
+
+    <!--========== HTML2PDF ==========-->
+    <script src="./assets/js/html2pdf.bundle.min.js"></script>
+
+    <!--========== MAIN JS ==========-->
+    <script src="./assets/js/resume.js"></script>
 </body>
 
 </html>
