@@ -1,506 +1,1232 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruhul Amin - macOS Portfolio</title>
+    <!-- Tailwind CSS for modern utility styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbars and Mac glassmorphism */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
 
-    <!--========== BOX ICONS ==========-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0b0f19;
+            color: #f3f4f6;
+            overflow: hidden;
+            user-select: none;
+            height: 100vh;
+            margin: 0;
+        }
 
-    <!--========== CSS ==========-->
-    <link rel="stylesheet" href="./assets/css/resume.css">
+        /* Dynamic Wallpaper Backgrounds */
+        .wallpaper-1 {
+            background: radial-gradient(circle at 20% 20%, #4f46e5 0%, transparent 40%),
+                        radial-gradient(circle at 80% 80%, #ec4899 0%, transparent 40%),
+                        radial-gradient(circle at 50% 50%, #06b6d4 0%, transparent 50%),
+                        #0f172a;
+        }
+        .wallpaper-2 {
+            background: radial-gradient(circle at 10% 90%, #8b5cf6 0%, transparent 50%),
+                        radial-gradient(circle at 90% 10%, #3b82f6 0%, transparent 50%),
+                        #090d16;
+        }
+        .wallpaper-3 {
+            background: radial-gradient(circle at 50% 10%, #f43f5e 0%, transparent 50%),
+                        radial-gradient(circle at 20% 80%, #fbbf24 0%, transparent 50%),
+                        #18181b;
+        }
 
-    <title>Ruhul Amin Portfolio</title>
+        /* Glassmorphism panel */
+        .glass {
+            background: rgba(24, 24, 27, 0.75);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .glass-dock {
+            background: rgba(20, 20, 25, 0.65);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .glass-menubar {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Window animations & styling */
+        .window {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+            transform-origin: center;
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.92) translateY(20px);
+            z-index: 10;
+        }
+
+        .window.open {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1) translateY(0);
+        }
+
+        .window.minimized {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.2) translateY(500px);
+        }
+
+        .window.active-window {
+            z-index: 50;
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Dock hover magnification effect */
+        .dock-container {
+            transform: translateX(-50%);
+        }
+        .dock-item {
+            transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .dock-item:hover {
+            transform: translateY(-12px) scale(1.25);
+        }
+
+        /* Lid open transition for landing */
+        #macbook-container {
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        #macbook-container.opened {
+            transform: scale(1.05) translateY(-30px);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Pulse animation for notifications */
+        @keyframes pulse-dot {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.7; }
+        }
+        .pulse-badge {
+            animation: pulse-dot 2s infinite ease-in-out;
+        }
+    </style>
 </head>
+<body class="wallpaper-1 transition-colors duration-700" id="main-body">
 
-<body>
-    <!--========== HEADER ==========-->
-    <header class="l-header" id="header">
-        <nav class="nav bd-container">
-            <a href="#" class="nav__LOGO">Ruhul Amin</a>
-
-            <div class="nav__menu" id="nav-menu">
-                <ul class="nav__list">
-                    <li class="nav__item">
-                        <a href="#home" class="nav__link active-link">
-                            <i class='bx bx-home nav__icon'></i>Home
-                        </a>
-                    </li>
-
-                    <li class="nav__item">
-                        <a href="#profile" class="nav__link">
-                            <i class='bx bx-user nav__icon'></i>Profile
-                        </a>
-                    </li>
-
-                    <li class="nav__item">
-                        <a href="#education" class="nav__link">
-                            <i class='bx bx-book nav__icon'></i>Education
-                        </a>
-                    </li>
-
-                    <li class="nav__item">
-                        <a href="#skills" class="nav__link">
-                            <i class='bx bx-receipt'></i>Skills
-                        </a>
-                    </li>
-
-                    <li class="nav__item">
-                        <a href="#experience" class="nav__link">
-                            <i class='bx bx-briefcase-alt nav__icon'></i>Experience
-                        </a>
-                    </li>
-
-                    <li class="nav__item">
-                        <a href="#certificate" class="nav__link">
-                            <i class='bx bx-award nav__icon'></i>Certificate
-                        </a>
-                    </li>
-
-                    <li class="nav__item">
-                        <a href="#references" class="nav__link">
-                            <i class='bx bx-link-external nav__icon'></i>References
-                        </a>
-                    </li>
-                </ul>
+    <!-- LANDING / LID OPEN SCREEN -->
+    <div id="landing-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/95 transition-opacity duration-1000">
+        <div class="text-center cursor-pointer group" onclick="openMacBook()">
+            <!-- Realistic MacBook Lid Graphic -->
+            <div id="macbook-container" class="relative w-[340px] md:w-[500px] h-[220px] md:h-[320px] bg-gradient-to-b from-neutral-700 via-neutral-800 to-neutral-900 rounded-t-2xl border-t border-x border-neutral-600 shadow-2xl flex items-center justify-center mx-auto mb-8 group-hover:scale-[1.02] transition-transform">
+                <div class="absolute top-2 w-3 h-3 rounded-full bg-neutral-900 border border-neutral-700 flex items-center justify-center">
+                    <div class="w-1 h-1 rounded-full bg-blue-500/50"></div>
+                </div>
+                <!-- Glowing Apple Logo -->
+                <div class="text-white text-6xl md:text-8xl filter drop-shadow-[0_0_15px_rgba(255,255,255,0.7)]">
+                    <i class="fab fa-apple"></i>
+                </div>
+                <!-- Base lip -->
+                <div class="absolute -bottom-3 w-[110%] -left-[5%] h-4 bg-gradient-to-b from-neutral-800 to-neutral-950 rounded-b-xl border border-neutral-700 shadow-lg flex justify-center items-center">
+                    <div class="w-20 h-1 bg-neutral-600 rounded-full"></div>
+                </div>
             </div>
-
-            <div class="nav__toggle" id="nav-toggle">
-                <i class='bx bx-grid-alt'></i>
-            </div>
-        </nav>
-    </header>
-
-
-    <main class="l-main bd-container">
-        <!-- All elements within this div, is generated in PDF -->
-        <div class="resume" id="area-cv">
-
-            <div class="resume__left">
-                <!--========== HOME ==========-->
-                <section class="home" id="home">
-                    <div class="home__container section bd-grid">
-                        <div class="home__data bd-grid">
-                            <img src="./assets/img/ruhul.jpg" class="home__img" alt="">
-
-                            <h1 class="home__title">Ruhul <b>Amin</b></h1>
-                            <h3 class="home__profession">Android Developer</h3>
-
-                            <!-- Button to generate and download the pdf. Available for desktop. -->
-                            <div>
-                                <a download="" href="./assets/pdf/ResumeCv.pdf" class="home__button-movil">Download</a>
-                            </div>
-                        </div>
-
-                        <div class="home__address bd-grid">
-                            <span class="home__information">
-                                <i class='bx bx-map home__icon'></i> Khalishpur - Khan Jahan Ali - Khulna - Bangladesh
-                            </span>
-
-                            <span class="home__information">
-                                <i class='bx bx-envelope home__icon'></i> ruhulewb@gmail.com
-                            </span>
-
-                            <span class="home__information">
-                                <i class='bx bx-phone home__icon'></i> +88017
-                            </span>
-                        </div>
-
-                    </div>
-
-                    <!-- Theme change button -->
-                    <i class='bx bx-moon change-theme' title="Theme" id="theme-button"></i>
-
-
-                    <!-- Button to generate and download the pdf. Available for desktop. -->
-                    <i class='bx bx-download generate-pdf' title="Generate PDF" id="resume-button"></i>
-
-                </section>
-
-                <!--========== SOCIAL ==========-->
-                <section class="social section">
-                    <h2 class="section-title">SOCIAL</h2>
-
-                    <div class="social__container bd-grid">
-                        <a href="https://www.linkedin.com/in/ruhul-amin-3850a82b9" target="_blank"
-                            class="social__link">
-                            <i class='bx bxl-linkedin-square social__icon'></i> Ruhul Amin
-                        </a>
-
-                        <a href="https://github.com/IRuhulAmin" target="_blank" class="social__link">
-                            <i class='bx bxl-github social__icon'></i> Ruhul Amin
-                        </a>
-
-                        <a href="https://www.instagram.com/me_sami._/" target="_blank" class="social__link">
-                            <i class='bx bxl-instagram social__icon'></i> codewithruhan
-                        </a>
-                    </div>
-                </section>
-
-                <!--========== PROFILE ==========-->
-                <section class="profile section" id="profile">
-                    <h2 class="section-title">Profile</h2>
-
-                    <p class="profile__description">I am a person responsible with the works during working hours.
-                        Finish various technical works (such as android app/ios app/web developments) and also completed my diploma in Computer Technology and currently studying CSE in an university. I have several years of
-                        experience and achievements in the field of android app development</p>
-                </section>
-
-                <!--========== EDUCATION ==========-->
-                <section class="education section" id="education">
-                    <h2 class="section-title">Education</h2>
-
-                    <div class="education__container bd-grid">
-                        <div class="education__content">
-                            <div class="education__time">
-                                <span class="education__rounder"></span>
-                                <span class="education__line"></span>
-                            </div>
-
-                            <div class="education__data bd-grid">
-                                <h3 class="education__title">University: NUBTK</h3>
-                                <span class="education__studies">CSE</span>
-                                <span class="eductaion__year">2026</span>
-                            </div>
-                        </div>
-
-                        <div class="education__content">
-                            <div class="education__time">
-                                <span class="education__rounder"></span>
-                                <span class="education__line"></span>
-                            </div>
-
-                            <div class="education__data bd-grid">
-                                <h3 class="education__title">College: Khulna Polytechnic Institute</h3>
-                                <span class="education__studies">Diploma in Computer Technology</span>
-                                <span class="eductaion__year">2015 - 2019</span>
-                            </div>
-                        </div>
-
-                        <div class="education__content">
-                            <div class="education__time">
-                                <span class="education__rounder"></span>
-                                <!-- <span class="education__line"></span> -->
-                            </div>
-
-                            <div class="education__data bd-grid">
-                                <h3 class="education__title">School: KBKSS</h3>
-                                <span class="education__studies">KBKSS</span>
-                                <span class="eductaion__year">2015</span>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-
-                <!--========== SKILLS  ==========-->
-                <section class="skills section" id="skills">
-                    <h2 class="section-title">Skills</h2>
-
-                    <div class="skills__content bd-grid">
-
-                        <ul class="skills__data">
-                            <li class="skill__name">
-                                <span class="skills__circle"></span> Java and Kotlin
-                            </li>
-
-                            <li class="skill__name">
-                                <span class="skills__circle"></span> Android
-                            </li>
-
-                            <li class="skill__name">
-                                <span class="skills__circle"></span>Html & Css
-                            </li>
-
-                            <li class="skill__name">
-                                <span class="skills__circle"></span> PHP
-                            </li>
-                        </ul>
-
-
-                        <ul class="skills__data">
-                            <li class="skill__name">
-                                <span class="skills__circle"></span> Python
-                            </li>
-
-                            <li class="skill__name">
-                                <span class="skills__circle"></span> Bootstrap
-                            </li>
-
-                            <li class="skill__name">
-                                <span class="skills__circle"></span> Firebase
-                            </li>
-
-                            <li class="skill__name">
-                                <span class="skills__circle"></span> Github
-                            </li>
-
-                        </ul>
-
-
-                    </div>
-                </section>
-
-            </div>
-
-
-
-
-
-
-
-            <div class="resume__right">
-                <!--========== EXPERIENCE ==========-->
-                <section class="experience section" id="experience">
-                    <h2 class="section-title">Experience</h2>
-
-                    <div class="experience__container bd-grid">
-
-                        <div class="experience__content">
-                            <div class="experience__time">
-                                <span class="experience__rounder"></span>
-                                <span class="experience__line"></span>
-                            </div>
-
-                            <div class="experience__data bd-grid">
-                                <h3 class="experience__title">Skills and Training Enhancement Project (STEP)</h3>
-                                <span class="experience__company">Android App developer</span>
-                                <p class="experience__description">I have perticipated here as an android developer with my team.I have certified for that for both the institute ;evel and regional level.</p>
-                            </div>
-                        </div>
-
-                        <div class="experience__content">
-                            <div class="experience__time">
-                                <span class="experience__rounder"></span>
-                                <span class="experience__line"></span>
-                            </div>
-
-                            <div class="experience__data bd-grid">
-                                <h3 class="experience__title">People N Tech</h3>
-                                <span class="experience__company">Web Designer & Developer</span>
-                                <p class="experience__description">Work in this field as an intern dedicating the best
-                                    responsiblity in the area that corresponds, delivering the best results for the
-                                    app development and improving productivity.</p>
-                            </div>
-                        </div>
-
-                        <div class="experience__content">
-                            <div class="experience__time">
-                                <span class="experience__rounder"></span>
-                                <span class="experience__line"></span>
-                            </div>
-
-<!--                             <div class="experience__data bd-grid">
-                                <h3 class="experience__title">Australian Organization</h3>
-                                <span class="experience__company">Web Apps</span>
-                                <p class="experience__description">Work in this field as dedicating developer,who has the best
-                                    responsiblity in the area that corresponds, delivering the best results for the
-                                    app development and improving productivity.</p>
-                            </div> -->
-                        </div>
-
-                       
-                </section>
-
-                <!--========== CERTIFICATES ==========-->
-                <section class="certificate section" id="certificates">
-                    <h2 class="section-title">Certificates</h2>
-
-                    <div class="certificate__container bd-grid">
-                        <div class="certificate__content">
-                            <h3 class="certificate__title">Professional Web development Specialist</h3>
-                            <p class="certificate__description">for work as an intern in this USA based organization</p>
-                        </div>
-
-                        <div class="certificate__content">
-                            <h3 class="certificate__title">STEP Regional Certificate</h3>
-                            <p class="certificate__description">for taking part in Government Skill and Training Enhancement Projects. </p>
-                        </div>
-
-                        <div class="certificate__content">
-                            <h3 class="certificate__title">STEP Institute Certificate</h3>
-                            <p class="certificate__description">for taking part in Government Skill and Training Enhancement Projects and own second position</p>
-                        </div>
-                    </div>
-
-                </section>
-
-                <!--========== REFERENCES ==========-->
-                <section class="references section" id="references">
-                    <h2 class="section-title" href="https://iruhulamin.github.io/myapp.html" alt="click on projects for apk">Pojects</h2>
-
-                    <div class="references__container bd-grid">
-<div class="references__content bd-grid">
-                            <span class="references__subtitle">Web App, Android App coming soon</span>
-                            <h3 class="references__title">myapp.com</h3>
-                            <ul class="references__contact">
-                                <li><a href="https://iruhulamin.github.io/myapp.html" target="_blank"
-                            class="social__link">All My Android & Web App ScreenShot</a></li>
-                                <li>Email : ruhulewb@email.com</li>
-                            </ul>
-    
-                         <div class="references__content bd-grid">
-                            <span class="references__subtitle">Web App, Android App coming soon</span>
-                            <h3 class="references__title">napitchai.com</h3>
-                            <ul class="references__contact">
-                                <li><a href="https://napitchai.com/" target="_blank"
-                            class="social__link">Address: NapitChai Web App</a></li>
-                                <li>Email : ruhulewb@email.com</li>
-                            </ul>
-                             <div class="references__container bd-grid">
-<div class="references__content bd-grid">
-                            <span class="references__subtitle">Web App, Android App coming soon</span>
-                            <h3 class="references__title">ScanNGo</h3>
-                            <ul class="references__contact">
-                                <li><a href="https://github.com/IRuhulAmin/ScanNGo/releases/download/v1.0.0/app-debug.apk" target="_blank"
-                            class="social__link">ScanNGo Download Apk</a></li>
-                                <li>Email : ruhulewb@email.com</li>
-                            </ul>
-                        <div class="references__content bd-grid">
-                            <span class="references__subtitle">Android OS, App</span>
-                            <h3 class="references__title">Bluetooth Call App</h3>
-                            <ul class="references__contact">
-                                <li><a href="https://iruhulamin.github.io/myapp.html" target="_blank"
-                            class="social__link">PlayStore Link: Github Link</a></li>
-                                <li>Email : ruhulewb@email.com</li>
-                            </ul>
-                     
-                        <div class="references__content bd-grid">
-                            <span class="references__subtitle">Android OS, App</span>
-                            <h3 class="references__title">Cinema Booking App</h3>
-                            <ul class="references__contact">
-                                <li><a href="https://iruhulamin.github.io/myapp.html" target="_blank"
-                            class="social__link">PlayStore Link: Github Link</a></li>
-                                <li>Email : ruhulewb@email.com</li>
-                            </ul>
-                        </br></br></br></br></br>
-                    <div class="references__container bd-grid">
-                        <div class="references__content bd-grid">
-                            <span class="references__subtitle">Android OS, App</span>
-                            <h3 class="references__title">InfoApp</h3>
-                            <ul class="references__contact">
-                                <li><a href="https://play.google.com/store/apps/details?id=com.my.infoapp" target="_blank"
-                            class="social__link">PlayStore Link: InfoApp</a></li>
-                                <li>Email : ruhulewb@email.com</li>
-                            </ul>
-                        </div>
-
-                        <div class="references__content bd-grid">
-                            <span class="references__subtitle">Android OS, game app.</span>
-                            <h3 class="references__title">Catch Coins</h3>
-                            <ul class="references__contact">
-                                <li><a href="https://play.google.com/store/apps/details?id=com.my.catchcoins" target="_blank"
-                            class="social__link">PlayStore Link:Catch Coins </a></li>
-                                <li>Email : ruhulewb@email.com</li>
-                            </ul>
-                        </div>
-
-                        <div class="references__content bd-grid">
-                            <span class="references__subtitle">Meh VA</span>
-                            <h3 class="references__title">Clone Google and Siri Voice detection virtual Assistant</h3>
-                            <ul class="references__contact">
-                                <li>Developed using python programming language.</li>
-                                <li>Email : ruhulewb@email.com</li>
-                            </ul>
-                        </div>
-
-                         <div class="references__content bd-grid">
-                            <span class="references__subtitle">Booking App</span>
-                            <h3 class="references__title">A Ticket booking system</h3>
-                            <ul class="references__contact">
-                                <li>Developed using Kotlin programming language.</li>
-                                <li>Email : ruhulewb@email.com</li>
-                            </ul>
-                        </div>
-
-                        <div class="references__content bd-grid">
-                            <span class="references__subtitle">Web app</span>
-                            <h3 class="references__title">kktype WebApp</h3>
-                            <ul class="references__contact">
-                                <li><a href="https://iruhulamin.github.io/kktype/" target="_blank"
-                            class="social__link">kktype WebAppLink:kktype </a></li>
-                                <li>Email : ruhulewb@email.com</li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
-
-                <!--========== LANGUAGES ==========-->
-                <section class="languages section">
-                    <h2 class="section-title">Languages</h2>
-
-                    <div class="languages__container">
-                        <ul class="languages__content bd-grid">
-                            <li class="languages__name">
-                                <span class="languages__circle"></span>Bengali
-                            </li>
-
-                            <li class="languages__name">
-                                <span class="languages__circle"></span>English
-                            </li>
-
-                            <li class="languages__name">
-                                <span class="languages__circle"></span>Hindi
-                            </li>
-
-                         
-                        </ul>
-                    </div>
-                </section>
-
-                 
-
-<br>
-<br>
-<br>
-
-
-                <!--========== INTERESTS ==========-->
-                <section class="interests section">
-                    <h2 class="section-title">Interests</h2>
-
-                    <div class="intrests__container bd-grid">
-                        <div class="intrests__contnet">
-                            <i class='bx bx-football intrests__icon'></i>
-                            <span class="intrests__name">Sports</span>
-                        </div>
-
-                        <div class="intrests__contnet">
-                            <i class='bx bxs-plane-alt intrests__icon'></i>
-                            <span class="intrests__name">Travel</span>
-                        </div>
-
-                        <div class="intrests__contnet">
-                            <i class='bx bx-code intrests__icon'></i>
-                            <span class="intrests__name">Code</span>
-                        </div>
-
-                        <div class="intrests__contnet">
-                            <i class='bx bx-dumbbell intrests__icon'></i>
-                            <span class="intrests__name">Fitness</span>
-                        </div>
-                    </div>
-                </section>
+            
+            <h1 class="text-2xl md:text-3xl font-semibold text-white tracking-tight mb-2 group-hover:text-blue-400 transition-colors">Ruhul Amin</h1>
+            <p class="text-neutral-400 text-sm md:text-base mb-6">macOS Sonoma • Interactive Portfolio</p>
+            <div class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-medium shadow-lg shadow-blue-600/30 transition-all transform group-hover:translate-y-[-2px]">
+                <i class="fas fa-laptop"></i> Click to Open Laptop
             </div>
         </div>
-    </main>
+    </div>
 
-    <!--========== SCROLL TOP ==========-->
-    <a href="#" class="scrolltop" id="scroll-top">
-        <i class='bx bx-up-arrow-alt scrolltop__icon'></i>
-    </a>
+    <!-- MAIN DESKTOP ENVIRONMENT -->
+    <div id="desktop-env" class="relative w-screen h-screen hidden opacity-0 transition-opacity duration-1000 flex flex-col justify-between overflow-hidden">
+        
+        <!-- TOP MENU BAR -->
+        <div class="h-8 glass-menubar w-full flex items-center justify-between px-4 text-xs font-medium text-neutral-200 z-40 select-none">
+            <div class="flex items-center space-x-4">
+                <button onclick="toggleAppleMenu(event)" class="hover:bg-white/10 px-2 py-1 rounded transition flex items-center space-x-1 focus:outline-none">
+                    <i class="fab fa-apple text-sm"></i>
+                    <span class="font-semibold hidden sm:inline">Finder</span>
+                </button>
+                <span class="cursor-pointer hover:text-white transition hidden sm:inline" onclick="focusApp('about')">About</span>
+                <span class="cursor-pointer hover:text-white transition hidden sm:inline" onclick="focusApp('projects')">Projects</span>
+                <span class="cursor-pointer hover:text-white transition hidden sm:inline" onclick="focusApp('skills')">Skills</span>
+                <span class="cursor-pointer hover:text-white transition hidden sm:inline" onclick="focusApp('contact')">Contact</span>
+            </div>
+            
+            <div class="flex items-center space-x-3 text-neutral-300">
+                <div class="hidden sm:flex items-center space-x-1 bg-black/20 px-2 py-0.5 rounded">
+                    <i class="fas fa-volume-high text-[10px]"></i>
+                    <span class="text-[11px]">100%</span>
+                </div>
+                <div class="hidden sm:flex items-center space-x-1">
+                    <i class="fas fa-wifi text-[11px]"></i>
+                </div>
+                <div class="flex items-center space-x-1">
+                    <i class="fas fa-battery-three-quarters text-emerald-400 text-[11px]"></i>
+                    <span class="text-[11px]">94%</span>
+                </div>
+                <span id="clock" class="font-semibold text-white ml-2">Fri Oct 16 10:18 PM</span>
+            </div>
+        </div>
+
+        <!-- APPLE DROPDOWN MENU -->
+        <div id="apple-menu" class="absolute top-9 left-3 w-56 glass rounded-xl shadow-2xl p-2 hidden z-50 text-xs text-neutral-200 border border-white/10">
+            <div class="p-2 hover:bg-blue-600 hover:text-white rounded-lg cursor-pointer flex items-center justify-between transition" onclick="openApp('settings'); toggleAppleMenu()">
+                <span>System Settings...</span>
+                <i class="fas fa-gear"></i>
+            </div>
+            <div class="p-2 hover:bg-blue-600 hover:text-white rounded-lg cursor-pointer flex items-center justify-between transition" onclick="openApp('terminal'); toggleAppleMenu()">
+                <span>Terminal Quick Action</span>
+                <i class="fas fa-terminal"></i>
+            </div>
+            <div class="my-1 border-t border-white/10"></div>
+            <div class="p-2 hover:bg-red-600 hover:text-white rounded-lg cursor-pointer flex items-center justify-between transition" onclick="location.reload()">
+                <span>Restart Portfolio</span>
+                <i class="fas fa-rotate-right"></i>
+            </div>
+        </div>
+
+        <!-- DESKTOP WORKSPACE AREA -->
+        <div id="workspace" class="relative flex-1 w-full overflow-hidden p-6 grid grid-cols-2 sm:grid-cols-4 gap-6 content-start max-w-sm sm:max-w-none">
+            <!-- Desktop Shortcuts -->
+            <div onclick="openApp('about')" class="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-white/10 cursor-pointer group w-20 h-20 transition">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-500 shadow-lg flex items-center justify-center text-white text-xl mb-1 group-hover:scale-105 transition-transform">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <span class="text-xs text-shadow font-medium text-white text-center drop-shadow-md">About.me</span>
+            </div>
+
+            <div onclick="openApp('projects')" class="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-white/10 cursor-pointer group w-20 h-20 transition">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-rose-500 to-pink-600 shadow-lg flex items-center justify-center text-white text-xl mb-1 group-hover:scale-105 transition-transform">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <span class="text-xs text-shadow font-medium text-white text-center drop-shadow-md">Projects</span>
+            </div>
+
+            <div onclick="openApp('skills')" class="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-white/10 cursor-pointer group w-20 h-20 transition">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-600 shadow-lg flex items-center justify-center text-white text-xl mb-1 group-hover:scale-105 transition-transform">
+                    <i class="fas fa-code"></i>
+                </div>
+                <span class="text-xs text-shadow font-medium text-white text-center drop-shadow-md">Skills</span>
+            </div>
+
+            <div onclick="openApp('terminal')" class="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-white/10 cursor-pointer group w-20 h-20 transition">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-neutral-800 to-neutral-900 border border-neutral-700 shadow-lg flex items-center justify-center text-emerald-400 text-xl mb-1 group-hover:scale-105 transition-transform font-mono">
+                    <i class="fas fa-terminal"></i>
+                </div>
+                <span class="text-xs text-shadow font-medium text-white text-center drop-shadow-md">Terminal</span>
+            </div>
+        </div>
+
+        <!-- ==================== WINDOWS ==================== -->
+
+        <!-- ABOUT WINDOW -->
+        <div id="window-about" class="window glass w-[90%] md:w-[700px] h-[480px] top-[10%] left-[5%] md:left-[15%] active-window" onmousedown="bringToFront('about')">
+            <div class="window-header h-10 px-4 flex items-center justify-between border-b border-white/10 bg-black/20 cursor-move" onmousedown="startDrag(event, 'window-about')">
+                <div class="flex items-center space-x-2">
+                    <button onclick="closeApp('about')" class="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 flex items-center justify-center text-[8px] text-black/70 hover:text-black transition"><i class="fas fa-times"></i></button>
+                    <button onclick="minimizeApp('about')" class="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-600 flex items-center justify-center text-[8px] text-black/70 hover:text-black transition"><i class="fas fa-minus"></i></button>
+                    <button onclick="maximizeApp('window-about')" class="w-3 h-3 rounded-full bg-green-500 hover:bg-green-600 flex items-center justify-center text-[8px] text-black/70 hover:text-black transition"><i class="fas fa-expand"></i></button>
+                </div>
+                <div class="text-xs font-semibold text-neutral-300">About Me — Ruhul Amin</div>
+                <div class="w-12"></div>
+            </div>
+
+            
+           
+<div class="flex-1 p-6 overflow-y-auto flex flex-col md:flex-row gap-6 items-center">
+
+    <div class="relative group w-36 h-36 md:w-44 md:h-44 shrink-0">
+        <img
+            src="./ruhulamin.jpg"
+            alt="Ruhul Amin - Full-Stack Developer"
+            class="w-full h-full rounded-2xl object-cover object-center border-2 border-blue-500 shadow-xl transition-transform duration-300 group-hover:scale-105"
+            onerror="this.onerror=null; this.src='./ruhulamin.jpeg';"
+        >
+
+        <!-- Download CV Button -->
+        <a
+            href="./ruhul_cv.pdf"
+            download="Ruhul_Amin_CV.pdf"
+            target="_blank"
+            class="absolute -bottom-3 -right-3 bg-emerald-500 hover:bg-emerald-400 text-black text-[10px] font-bold px-3 py-2 rounded-full border-2 border-neutral-900 shadow-lg transition flex items-center gap-1.5 whitespace-nowrap"
+            aria-label="Download Ruhul Amin CV"
+            title="Download or open CV"
+        >
+            <i class="fas fa-file-pdf"></i>
+            Download CV
+        </a>
+    </div>
+
+    <div class="flex-1 text-left">
+        <div class="inline-block px-3 py-1 bg-blue-500/10 text-blue-400 rounded-full text-xs font-semibold mb-2">
+            Full-Stack Developer
+        </div>
+
+        <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">
+            Ruhul Amin
+        </h2>
+
+        <p class="text-neutral-300 text-sm leading-relaxed mb-4">
+            Practical Full-Stack Developer with hands-on experience building,
+            testing, debugging, and deploying web and Android applications
+            using PHP, MySQL, ReactJS, and modern development tools. Skilled
+            in frontend development, database management, software QA, and
+            AI-assisted coding, with a strong focus on problem-solving,
+            functionality, and delivering reliable, user-friendly applications.
+        </p>
+
+        <div class="grid grid-cols-3 gap-3 mb-4 text-center">
+            <div class="bg-white/5 p-2 rounded-xl border border-white/5">
+                <div class="text-lg font-bold text-blue-400">Full-Stack</div>
+                <div class="text-[11px] text-neutral-400">Development</div>
+            </div>
+
+            <div class="bg-white/5 p-2 rounded-xl border border-white/5">
+                <div class="text-lg font-bold text-emerald-400">Web & Android</div>
+                <div class="text-[11px] text-neutral-400">Applications</div>
+            </div>
+
+            <div class="bg-white/5 p-2 rounded-xl border border-white/5">
+                <div class="text-lg font-bold text-rose-400">PHP & React</div>
+                <div class="text-[11px] text-neutral-400">Tech Stack</div>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap gap-2">
+            <a
+                href="#contact"
+                onclick="openApp('contact'); return false;"
+                class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-semibold shadow-lg transition"
+            >
+                <i class="fas fa-paper-plane"></i>
+                Get in Touch
+            </a>
+
+            <a
+                href="./ruhul_cv.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-semibold transition"
+            >
+                <i class="fas fa-print"></i>
+                View / Print CV
+            </a>
+        </div>
+    </div>
+</div>
+
+        </div>
+
+        <!-- PROJECTS WINDOW -->
+        <div id="window-projects" class="window glass w-[92%] md:w-[750px] h-[520px] top-[12%] left-[8%] md:left-[22%]" onmousedown="bringToFront('projects')">
+            <div class="window-header h-10 px-4 flex items-center justify-between border-b border-white/10 bg-black/20 cursor-move" onmousedown="startDrag(event, 'window-projects')">
+                <div class="flex items-center space-x-2">
+                    <button onclick="closeApp('projects')" class="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 flex items-center justify-center text-[8px] text-black/70 hover:text-black transition"><i class="fas fa-times"></i></button>
+                    <button onclick="minimizeApp('projects')" class="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-600 flex items-center justify-center text-[8px] text-black/70 hover:text-black transition"><i class="fas fa-minus"></i></button>
+                    <button onclick="maximizeApp('window-projects')" class="w-3 h-3 rounded-full bg-green-500 hover:bg-green-600 flex items-center justify-center text-[8px] text-black/70 hover:text-black transition"><i class="fas fa-expand"></i></button>
+                </div>
+                <div class="text-xs font-semibold text-neutral-300">Projects Workspace</div>
+                <div class="w-12"></div>
+            </div>
+            
+<div class="flex-1 p-6 overflow-y-auto">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        <!-- Project 1 -->
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-4 hover:bg-white/10 transition flex flex-col justify-between">
+            <div>
+                <div class="flex justify-between items-start mb-2 gap-2">
+                    <h3 class="font-bold text-white text-base">Salon Booking System</h3>
+                    <span class="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full font-medium whitespace-nowrap">Web App</span>
+                </div>
+                <p class="text-neutral-400 text-xs mb-4">
+                    Developed a web-based salon booking platform, NapitChai.com, helping users find salons and explore booking services. Implemented input validation and tested core system functionality.
+                </p>
+            </div>
+            <div>
+                <div class="flex flex-wrap gap-1.5 mb-3">
+                    <span class="text-[10px] bg-neutral-800 text-neutral-300 px-2 py-0.5 rounded">PHP</span>
+                    <span class="text-[10px] bg-neutral-800 text-neutral-300 px-2 py-0.5 rounded">MySQL</span>
+                    <span class="text-[10px] bg-neutral-800 text-neutral-300 px-2 py-0.5 rounded">HTML</span>
+                    <span class="text-[10px] bg-neutral-800 text-neutral-300 px-2 py-0.5 rounded">CSS</span>
+                </div>
+                
+<a href="https://napitchai.com"
+   target="_blank"
+   rel="noopener noreferrer"
+   class="w-full py-1.5 bg-blue-600/30 hover:bg-blue-600 text-blue-300 hover:text-white rounded-xl text-xs font-medium transition flex items-center justify-center gap-1.5">
+
+    <i class="fas fa-external-link-alt text-[10px]"></i>
+    Live Preview
+
+</a>
+
+            </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-4 hover:bg-white/10 transition flex flex-col justify-between">
+            <div>
+                <div class="flex justify-between items-start mb-2 gap-2">
+                    <h3 class="font-bold text-white text-base">Cinema Booking App</h3>
+                    <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full font-medium whitespace-nowrap">Android</span>
+                </div>
+                <p class="text-neutral-400 text-xs mb-4">
+                    Developed an Android cinema booking application using Kotlin and Firebase, focusing on mobile UI development and backend data integration.
+                </p>
+            </div>
+            <div>
+                <div class="flex flex-wrap gap-1.5 mb-3">
+                    <span class="text-[10px] bg-neutral-800 text-neutral-300 px-2 py-0.5 rounded">Kotlin</span>
+                    <span class="text-[10px] bg-neutral-800 text-neutral-300 px-2 py-0.5 rounded">XML</span>
+                    <span class="text-[10px] bg-neutral-800 text-neutral-300 px-2 py-0.5 rounded">Firebase</span>
+                    <span class="text-[10px] bg-neutral-800 text-neutral-300 px-2 py-0.5 rounded">Android Studio</span>
+                </div>
+                <button onclick="showToast('Cinema Booking App demo URL to enable preview is not updated yet.')" class="w-full py-1.5 bg-blue-600/30 hover:bg-blue-600 text-blue-300 hover:text-white rounded-xl text-xs font-medium transition flex items-center justify-center gap-1.5">
+                    <i class="fas fa-external-link-alt text-[10px]"></i> View Project
+                </button>
+            </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-4 hover:bg-white/10 transition flex flex-col justify-between">
+            <div>
+                <div class="flex justify-between items-start mb-2 gap-2">
+                    <h3 class="font-bold text-white text-base">Bluetooth Call App</h3>
+                    <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded-full font-medium whitespace-nowrap">Android</span>
+                </div>
+                <p class="text-neutral-400 text-xs mb-4">
+                    Built an Android application in Android Studio using Java and XML, exploring mobile interface development and Bluetooth-related functionality.
+                </p>
+            </div>
+            <div>
+                <div class="flex flex-wrap gap-1.5 mb-3">
+                    <span class="text-[10px] bg-neutral-800 text-neutral-300 px-2 py-0.5 rounded">Java</span>
+                    <span class="text-[10px] bg-neutral-800 text-neutral-300 px-2 py-0.5 rounded">XML</span>
+                    <span class="text-[10px] bg-neutral-800 text-neutral-300 px-2 py-0.5 rounded">Android Studio</span>
+                </div>
+                <button onclick="showToast('Bluetooth Call App demo URL to enable preview is not updatedd yet')" class="w-full py-1.5 bg-blue-600/30 hover:bg-blue-600 text-blue-300 hover:text-white rounded-xl text-xs font-medium transition flex items-center justify-center gap-1.5">
+                    <i class="fas fa-external-link-alt text-[10px]"></i> View Project
+                </button>
+            </div>
+        </div>
+
+        <!-- Project 4 -->
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-4 hover:bg-white/10 transition flex flex-col justify-between">
+            <div>
+                <div class="flex justify-between items-start mb-2 gap-2">
+                    <h3 class="font-bold text-white text-base">Catch Coins Game</h3>
+                    <span class="text-[10px] bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-full font-medium whitespace-nowrap">Mobile Game</span>
+                </div>
+                <p class="text-neutral-400 text-xs mb-4">
+                    Developed a coin-catching Android game using Java and XML, practicing application logic, user interaction, and mobile interface design.
+                </p>
+            </div>
+            <div>
+                <div class="flex flex-wrap gap-1.5 mb-3">
+                    <span class="text-[10px] bg-neutral-800 text-neutral-300 px-2 py-0.5 rounded">Java</span>
+                    <span class="text-[10px] bg-neutral-800 text-neutral-300 px-2 py-0.5 rounded">XML</span>
+                    <span class="text-[10px] bg-neutral-800 text-neutral-300 px-2 py-0.5 rounded">Android Studio</span>
+                </div>
+                <button onclick="showToast('Catch Coins Game demo URL to enable preview is not updated yet.')" class="w-full py-1.5 bg-blue-600/30 hover:bg-blue-600 text-blue-300 hover:text-white rounded-xl text-xs font-medium transition flex items-center justify-center gap-1.5">
+                    <i class="fas fa-external-link-alt text-[10px]"></i> View Project
+                </button>
+            </div>
+        </div>
+
+        <!-- Project 5 -->
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-4 hover:bg-white/10 transition flex flex-col justify-between">
+            <div>
+                <div class="flex justify-between items-start mb-2 gap-2">
+                    <h3 class="font-bold text-white text-base">Python Voice Assistant</h3>
+                    <span class="text-[10px] bg-cyan-500/20 text-cyan-400 px-2 py-0.5 rounded-full font-medium whitespace-nowrap">Python</span>
+                </div>
+                <p class="text-neutral-400 text-xs mb-4">
+                    Created a basic virtual assistant using Python to explore automation, command handling, and assistant-style application development.
+                </p>
+            </div>
+            <div>
+                <div class="flex flex-wrap gap-1.5 mb-3">
+                    <span class="text-[10px] bg-neutral-800 text-neutral-300 px-2 py-0.5 rounded">Python</span>
+                    <span class="text-[10px] bg-neutral-800 text-neutral-300 px-2 py-0.5 rounded">Automation</span>
+                    <span class="text-[10px] bg-neutral-800 text-neutral-300 px-2 py-0.5 rounded">Voice Assistant</span>
+                </div>
+                <button onclick="showToast('Python Voice Assistant repository URL to enable preview is not updated yet.')" class="w-full py-1.5 bg-blue-600/30 hover:bg-blue-600 text-blue-300 hover:text-white rounded-xl text-xs font-medium transition flex items-center justify-center gap-1.5">
+                    <i class="fas fa-external-link-alt text-[10px]"></i> View Project
+                </button>
+            </div>
+        </div>
+
+        <!-- Project 6 -->
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-4 hover:bg-white/10 transition flex flex-col justify-between">
+            <div>
+                <div class="flex justify-between items-start mb-2 gap-2">
+                    <h3 class="font-bold text-white text-base">Broadcast Receiver System</h3>
+                    <span class="text-[10px] bg-rose-500/20 text-rose-400 px-2 py-0.5 rounded-full font-medium whitespace-nowrap">Android</span>
+                </div>
+                <p class="text-neutral-400 text-xs mb-4">
+                    Developed an Android application using Java, XML, and MySQL, working with Android components and database integration.
+                </p>
+            </div>
+            <div>
+                <div class="flex flex-wrap gap-1.5 mb-3">
+                    <span class="text-[10px] bg-neutral-800 text-neutral-300 px-2 py-0.5 rounded">Java</span>
+                    <span class="text-[10px] bg-neutral-800 text-neutral-300 px-2 py-0.5 rounded">XML</span>
+                    <span class="text-[10px] bg-neutral-800 text-neutral-300 px-2 py-0.5 rounded">MySQL</span>
+                    <span class="text-[10px] bg-neutral-800 text-neutral-300 px-2 py-0.5 rounded">Android Studio</span>
+                </div>
+                <button onclick="showToast('Broadcast Receiver System repository URL to enable preview is not updated yet.')" class="w-full py-1.5 bg-blue-600/30 hover:bg-blue-600 text-blue-300 hover:text-white rounded-xl text-xs font-medium transition flex items-center justify-center gap-1.5">
+                    <i class="fas fa-external-link-alt text-[10px]"></i> View Project
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+        </div>
+
+        <!-- SKILLS WINDOW -->
+        <div id="window-skills" class="window glass w-[90%] md:w-[650px] h-[480px] top-[15%] left-[12%] md:left-[28%]" onmousedown="bringToFront('skills')">
+            <div class="window-header h-10 px-4 flex items-center justify-between border-b border-white/10 bg-black/20 cursor-move" onmousedown="startDrag(event, 'window-skills')">
+                <div class="flex items-center space-x-2">
+                    <button onclick="closeApp('skills')" class="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 flex items-center justify-center text-[8px] text-black/70 hover:text-black transition"><i class="fas fa-times"></i></button>
+                    <button onclick="minimizeApp('skills')" class="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-600 flex items-center justify-center text-[8px] text-black/70 hover:text-black transition"><i class="fas fa-minus"></i></button>
+                    <button onclick="maximizeApp('window-skills')" class="w-3 h-3 rounded-full bg-green-500 hover:bg-green-600 flex items-center justify-center text-[8px] text-black/70 hover:text-black transition"><i class="fas fa-expand"></i></button>
+                </div>
+                <div class="text-xs font-semibold text-neutral-300">Technical Expertise</div>
+                <div class="w-12"></div>
+            </div>
+            
+<div class="flex-1 p-6 overflow-y-auto space-y-4">
+    <div>
+        <div class="flex justify-between text-xs font-medium text-neutral-300 mb-1">
+            <span>Frontend (HTML5, CSS3, ReactJS, Bootstrap)</span>
+            <span class="text-blue-400">85%</span>
+        </div>
+        <div class="w-full bg-white/10 h-2 rounded-full overflow-hidden">
+            <div class="bg-gradient-to-r from-blue-500 to-indigo-500 h-full rounded-full" style="width: 85%"></div>
+        </div>
+    </div>
+
+    <div>
+        <div class="flex justify-between text-xs font-medium text-neutral-300 mb-1">
+            <span>Backend (PHP, WordPress, Web Development)</span>
+            <span class="text-emerald-400">70%</span>
+        </div>
+        <div class="w-full bg-white/10 h-2 rounded-full overflow-hidden">
+            <div class="bg-gradient-to-r from-emerald-500 to-teal-500 h-full rounded-full" style="width: 80%"></div>
+        </div>
+    </div>
+
+    <div>
+        <div class="flex justify-between text-xs font-medium text-neutral-300 mb-1">
+            <span>Databases (MySQL, Firebase, Supabase)</span>
+            <span class="text-purple-400">80%</span>
+        </div>
+        <div class="w-full bg-white/10 h-2 rounded-full overflow-hidden">
+            <div class="bg-gradient-to-r from-purple-500 to-pink-500 h-full rounded-full" style="width: 80%"></div>
+        </div>
+    </div>
+
+    <div>
+        <div class="flex justify-between text-xs font-medium text-neutral-300 mb-1">
+            <span>Android Development (Java, Kotlin, XML)</span>
+            <span class="text-amber-400">85%</span>
+        </div>
+        <div class="w-full bg-white/10 h-2 rounded-full overflow-hidden">
+            <div class="bg-gradient-to-r from-amber-500 to-orange-500 h-full rounded-full" style="width: 85%"></div>
+        </div>
+    </div>
+
+    <div>
+        <div class="flex justify-between text-xs font-medium text-neutral-300 mb-1">
+            <span>Software QA (Manual, Functional, Regression Testing)</span>
+            <span class="text-rose-400">75%</span>
+        </div>
+        <div class="w-full bg-white/10 h-2 rounded-full overflow-hidden">
+            <div class="bg-gradient-to-r from-rose-500 to-red-500 h-full rounded-full" style="width: 75%"></div>
+        </div>
+    </div>
+
+    <div>
+        <div class="flex justify-between text-xs font-medium text-neutral-300 mb-1">
+            <span>API Testing & Debugging (Postman)</span>
+            <span class="text-cyan-400">65%</span>
+        </div>
+        <div class="w-full bg-white/10 h-2 rounded-full overflow-hidden">
+            <div class="bg-gradient-to-r from-cyan-500 to-sky-500 h-full rounded-full" style="width: 65%"></div>
+        </div>
+    </div>
+
+    <div class="pt-2">
+        <h4 class="text-xs font-semibold text-neutral-400 mb-2 uppercase tracking-wider">
+            Tools & Ecosystem
+        </h4>
+        <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-xs text-neutral-200">Git / GitHub</span>
+            <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-xs text-neutral-200">Bootstrap</span>
+            <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-xs text-neutral-200">Android Studio</span>
+            <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-xs text-neutral-200">Postman</span>
+            <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-xs text-neutral-200">Figma</span>
+            <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-xs text-neutral-200">Firebase</span>
+            <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-xs text-neutral-200">WordPress</span>
+            <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-xs text-neutral-200">ChatGPT / Copilot</span>
+            <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-xs text-neutral-200">Domain & Hosting</span>
+            <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-xs text-neutral-200">Manual Testing</span>
+        </div>
+    </div>
+</div>
+
+        </div>
+
+        <!-- TERMINAL WINDOW -->
+        <div id="window-terminal" class="window glass w-[90%] md:w-[680px] h-[420px] top-[18%] left-[10%] md:left-[30%]" onmousedown="bringToFront('terminal')">
+            <div class="window-header h-10 px-4 flex items-center justify-between border-b border-white/10 bg-black/30 cursor-move" onmousedown="startDrag(event, 'window-terminal')">
+                <div class="flex items-center space-x-2">
+                    <button onclick="closeApp('terminal')" class="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 flex items-center justify-center text-[8px] text-black/70 hover:text-black transition"><i class="fas fa-times"></i></button>
+                    <button onclick="minimizeApp('terminal')" class="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-600 flex items-center justify-center text-[8px] text-black/70 hover:text-black transition"><i class="fas fa-minus"></i></button>
+                    <button onclick="maximizeApp('window-terminal')" class="w-3 h-3 rounded-full bg-green-500 hover:bg-green-600 flex items-center justify-center text-[8px] text-black/70 hover:text-black transition"><i class="fas fa-expand"></i></button>
+                </div>
+                <div class="text-xs font-semibold text-neutral-300 font-mono">alex@macbook-pro:~ (zsh)</div>
+                <div class="w-12"></div>
+            </div>
+            <div id="terminal-body" class="flex-1 p-4 overflow-y-auto font-mono text-xs text-emerald-400 bg-black/60 space-y-2 select-text" onclick="document.getElementById('terminal-input').focus()">
+                <div class="text-neutral-400">Last login: Fri Oct 16 22:18:04 on ttys001</div>
+                <div>Type <span class="text-yellow-400 font-bold">help</span> to view available commands.</div>
+                <div id="terminal-history" class="space-y-1"></div>
+                <div class="flex items-center space-x-2">
+                    <span class="text-blue-400">ruhulamin.prof@gmail.com</span>
+                    <span class="text-neutral-500">~</span>
+                    <span class="text-white">%</span>
+                    <input id="terminal-input" type="text" class="flex-1 bg-transparent border-none outline-none text-emerald-300 font-mono text-xs" autofocus onkeydown="handleTerminalCommand(event)">
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTACT WINDOW -->
+        <div id="window-contact" class="window glass w-[90%] md:w-[580px] h-[460px] top-[20%] left-[15%] md:left-[35%]" onmousedown="bringToFront('contact')">
+            <div class="window-header h-10 px-4 flex items-center justify-between border-b border-white/10 bg-black/20 cursor-move" onmousedown="startDrag(event, 'window-contact')">
+                <div class="flex items-center space-x-2">
+                    <button onclick="closeApp('contact')" class="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 flex items-center justify-center text-[8px] text-black/70 hover:text-black transition"><i class="fas fa-times"></i></button>
+                    <button onclick="minimizeApp('contact')" class="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-600 flex items-center justify-center text-[8px] text-black/70 hover:text-black transition"><i class="fas fa-minus"></i></button>
+                    <button onclick="maximizeApp('window-contact')" class="w-3 h-3 rounded-full bg-green-500 hover:bg-green-600 flex items-center justify-center text-[8px] text-black/70 hover:text-black transition"><i class="fas fa-expand"></i></button>
+                </div>
+                <div class="text-xs font-semibold text-neutral-300">Contact Message</div>
+                <div class="w-12"></div>
+            </div>
+           
+
+
+<div class="flex-1 p-6 overflow-y-auto">
+    <form id="contactForm" class="space-y-4">
+
+        <div>
+            <label for="contact-name" class="block text-xs font-medium text-neutral-300 mb-1">
+                Your Name
+            </label>
+            <input id="contact-name" name="name" type="text"
+                required maxlength="100" autocomplete="name"
+                placeholder="Enter your name"
+                class="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-blue-500 transition">
+        </div>
+
+        <div>
+            <label for="contact-email" class="block text-xs font-medium text-neutral-300 mb-1">
+                Your Email
+            </label>
+            <input id="contact-email" name="email" type="email"
+                required maxlength="254" autocomplete="email"
+                placeholder="you@example.com"
+                class="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-blue-500 transition">
+        </div>
+
+        <div>
+            <label for="contact-message" class="block text-xs font-medium text-neutral-300 mb-1">
+                Message
+            </label>
+            <textarea id="contact-message" name="message"
+                rows="4" required maxlength="5000"
+                placeholder="Let's build something amazing together..."
+                class="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-blue-500 transition resize-none"></textarea>
+        </div>
+
+        <button type="submit"
+            class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-semibold shadow-lg transition flex items-center justify-center gap-2">
+            <i class="fas fa-paper-plane"></i>
+            Send Message
+        </button>
+
+        <p id="contact-status" role="status" aria-live="polite"
+            class="text-xs text-neutral-400"></p>
+    </form>
+
+    <div class="mt-4 pt-4 border-t border-white/10 flex flex-wrap justify-around gap-4 text-neutral-400 text-sm">
+        <a href="mailto:ruhulamin.prof@gmail.com"
+            class="hover:text-white transition flex items-center gap-1.5">
+            <i class="fas fa-envelope text-xs"></i> Email
+        </a>
+
+        <a href="https://github.com/IRuhulAmin"
+            target="_blank" rel="noopener noreferrer"
+            class="hover:text-white transition flex items-center gap-1.5">
+            <i class="fab fa-github text-xs"></i> GitHub
+        </a>
+
+        <a href="https://linkedin.com/in/ruhul-amin-3850a82b9"
+            target="_blank" rel="noopener noreferrer"
+            class="hover:text-white transition flex items-center gap-1.5">
+            <i class="fab fa-linkedin text-xs"></i> LinkedIn
+        </a>
+    </div>
+</div>
 
 
 
 
 
 
-    <!--========== HTML2PDF ==========-->
-    <script src="./assets/js/html2pdf.bundle.min.js"></script>
 
-    <!--========== MAIN JS ==========-->
-    <script src="./assets/js/resume.js"></script>
+        </div>
+
+        <!-- SETTINGS WINDOW -->
+        <div id="window-settings" class="window glass w-[90%] md:w-[500px] h-[380px] top-[22%] left-[18%] md:left-[36%]" onmousedown="bringToFront('settings')">
+            <div class="window-header h-10 px-4 flex items-center justify-between border-b border-white/10 bg-black/20 cursor-move" onmousedown="startDrag(event, 'window-settings')">
+                <div class="flex items-center space-x-2">
+                    <button onclick="closeApp('settings')" class="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 flex items-center justify-center text-[8px] text-black/70 hover:text-black transition"><i class="fas fa-times"></i></button>
+                    <button onclick="minimizeApp('settings')" class="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-600 flex items-center justify-center text-[8px] text-black/70 hover:text-black transition"><i class="fas fa-minus"></i></button>
+                    <button onclick="maximizeApp('window-settings')" class="w-3 h-3 rounded-full bg-green-500 hover:bg-green-600 flex items-center justify-center text-[8px] text-black/70 hover:text-black transition"><i class="fas fa-expand"></i></button>
+                </div>
+                <div class="text-xs font-semibold text-neutral-300">System Settings</div>
+                <div class="w-12"></div>
+            </div>
+            <div class="flex-1 p-6 space-y-6">
+                <div>
+                    <h3 class="text-xs font-semibold text-neutral-400 mb-3 uppercase tracking-wider">Dynamic Wallpaper</h3>
+                    <div class="grid grid-cols-3 gap-3">
+                        <button onclick="setWallpaper(1)" class="h-16 rounded-xl wallpaper-1 border-2 border-blue-500 shadow-md hover:scale-105 transition flex items-center justify-center text-[10px] font-medium text-white">Aurora</button>
+                        <button onclick="setWallpaper(2)" class="h-16 rounded-xl wallpaper-2 border-2 border-transparent hover:border-white/50 shadow-md hover:scale-105 transition flex items-center justify-center text-[10px] font-medium text-white">Midnight</button>
+                        <button onclick="setWallpaper(3)" class="h-16 rounded-xl wallpaper-3 border-2 border-transparent hover:border-white/50 shadow-md hover:scale-105 transition flex items-center justify-center text-[10px] font-medium text-white">Sunset</button>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xs font-semibold text-neutral-400 mb-3 uppercase tracking-wider">System Information</h3>
+                    
+<div class="bg-white/5 p-3 rounded-xl text-xs space-y-2 text-neutral-300 border border-white/5">
+    <div class="flex justify-between gap-3">
+        <span>Brain CPU:</span>
+        <span class="text-white font-medium">Powered by ☕ Coffee</span>
+    </div>
+    <div class="flex justify-between gap-3">
+        <span>RAM:</span>
+        <span class="text-white font-medium">Unlimited Tabs Open</span>
+    </div>
+    <div class="flex justify-between gap-3">
+        <span>Operating System:</span>
+        <span class="text-white font-medium">Stack Overflow OS</span>
+    </div>
+    <div class="flex justify-between gap-3">
+        <span>Debugging Mode:</span>
+        <span class="text-emerald-400 font-medium">Ctrl + Z Engineer</span>
+    </div>
+    <div class="flex justify-between gap-3">
+        <span>Current Status:</span>
+        <span class="text-amber-400 font-medium">Works on My Machine™</span>
+    </div>
+</div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- TOAST NOTIFICATION -->
+        <div id="toast" class="fixed top-12 right-6 glass px-4 py-2.5 rounded-2xl shadow-2xl text-xs text-white transform -translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-2 border border-white/20">
+            <i class="fas fa-bell text-blue-400"></i>
+            <span id="toast-msg">Notification message</span>
+        </div>
+
+        <!-- MACOS DOCK -->
+        <div class="absolute bottom-3 left-1/2 dock-container z-40">
+            <div class="glass-dock px-3 py-2 rounded-2xl flex items-center space-x-3 shadow-2xl">
+                <!-- About -->
+                <div onclick="openApp('about')" class="dock-item relative group cursor-pointer flex flex-col items-center">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-500 shadow-md flex items-center justify-center text-white text-xl">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <span class="absolute -top-8 bg-black/80 text-white text-[10px] px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">About</span>
+                    <div id="dot-about" class="w-1 h-1 rounded-full bg-white mt-1 opacity-0 transition-opacity"></div>
+                </div>
+                <!-- Projects -->
+                <div onclick="openApp('projects')" class="dock-item relative group cursor-pointer flex flex-col items-center">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-rose-500 to-pink-600 shadow-md flex items-center justify-center text-white text-xl">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <span class="absolute -top-8 bg-black/80 text-white text-[10px] px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">Projects</span>
+                    <div id="dot-projects" class="w-1 h-1 rounded-full bg-white mt-1 opacity-0 transition-opacity"></div>
+                </div>
+                <!-- Skills -->
+                <div onclick="openApp('skills')" class="dock-item relative group cursor-pointer flex flex-col items-center">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-600 shadow-md flex items-center justify-center text-white text-xl">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <span class="absolute -top-8 bg-black/80 text-white text-[10px] px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">Skills</span>
+                    <div id="dot-skills" class="w-1 h-1 rounded-full bg-white mt-1 opacity-0 transition-opacity"></div>
+                </div>
+                <!-- Terminal -->
+                <div onclick="openApp('terminal')" class="dock-item relative group cursor-pointer flex flex-col items-center">
+                    <div class="w-12 h-12 rounded-2xl bg-neutral-900 border border-neutral-700 shadow-md flex items-center justify-center text-emerald-400 text-xl font-mono">
+                        <i class="fas fa-terminal"></i>
+                    </div>
+                    <span class="absolute -top-8 bg-black/80 text-white text-[10px] px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">Terminal</span>
+                    <div id="dot-terminal" class="w-1 h-1 rounded-full bg-white mt-1 opacity-0 transition-opacity"></div>
+                </div>
+                
+<!-- Contact -->
+<button type="button"
+    onclick="openApp('contact')"
+    aria-label="Open Contact"
+    class="dock-item relative group cursor-pointer flex flex-col items-center bg-transparent border-0">
+
+    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 to-orange-600 shadow-md flex items-center justify-center text-white text-xl">
+        <i class="fas fa-envelope"></i>
+    </div>
+
+    <span class="absolute -top-8 bg-black/80 text-white text-[10px] px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">
+        Contact
+    </span>
+
+    <div id="dot-contact"
+        class="w-1 h-1 rounded-full bg-white mt-1 opacity-0 transition-opacity">
+    </div>
+</button>
+
+                <div class="w-[1px] h-8 bg-white/20 mx-1"></div>
+                <!-- Settings -->
+                <div onclick="openApp('settings')" class="dock-item relative group cursor-pointer flex flex-col items-center">
+                    <div class="w-12 h-12 rounded-2xl bg-neutral-700 shadow-md flex items-center justify-center text-white text-xl">
+                        <i class="fas fa-gear"></i>
+                    </div>
+                    <span class="absolute -top-8 bg-black/80 text-white text-[10px] px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">Settings</span>
+                    <div id="dot-settings" class="w-1 h-1 rounded-full bg-white mt-1 opacity-0 transition-opacity"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+(function () {
+    const form = document.getElementById('contactForm');
+
+    if (!form || form.dataset.initialized === 'true') return;
+    form.dataset.initialized = 'true';
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        if (!form.reportValidity()) return;
+
+        const name = form.elements['name'].value.trim();
+        const email = form.elements['email'].value.trim();
+        const message = form.elements['message'].value.trim();
+
+        const status = document.getElementById('contact-status');
+
+        if (!name || !email || !message) {
+            status.textContent = 'Please complete all fields.';
+            return;
+        }
+
+        const recipient = 'ruhulamin.prof@gmail.com';
+        const subject = 'Portfolio Contact - ' + name;
+
+        const body =
+            'Hello Ruhul Amin,\n\n' +
+            message + '\n\n' +
+            'Regards,\n' + name + '\n' +
+            'Reply to: ' + email;
+
+        const gmailURL =
+            'https://mail.google.com/mail/?view=cm&fs=1' +
+            '&to=' + encodeURIComponent(recipient) +
+            '&su=' + encodeURIComponent(subject) +
+            '&body=' + encodeURIComponent(body);
+
+        status.textContent = 'Opening Gmail in your browser...';
+
+        window.location.href = gmailURL;
+    });
+})();
+</script>
+    <script>
+(function () {
+    const form = document.getElementById('contactForm');
+    if (!form || form.dataset.initialized === 'true') return;
+    form.dataset.initialized = 'true';
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const name = form.elements['name'].value.trim();
+        const email = form.elements['email'].value.trim();
+        const message = form.elements['message'].value.trim();
+        const status = document.getElementById('contact-status');
+
+        if (!name || !email || !message) {
+            status.textContent = 'Please complete all fields.';
+            status.className = 'text-xs text-amber-400';
+            return;
+        }
+
+        const subject = encodeURIComponent('Portfolio Contact - ' + name);
+        const body = encodeURIComponent(
+            'Name: ' + name + '\n' +
+            'Email: ' + email + '\n\n' +
+            'Message:\n' + message
+        );
+
+        status.textContent = 'Opening your email application...';
+        status.className = 'text-xs text-blue-400';
+
+        window.location.href =
+            'mailto:ruhulamin.prof@gmail.com?subject=' +
+            subject + '&body=' + body;
+    });
+})();
+
+
+function handleContactSubmit(event) {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+
+    const name = form.elements['name'].value.trim();
+    const email = form.elements['email'].value.trim();
+    const message = form.elements['message'].value.trim();
+
+    const status = document.getElementById('contact-status');
+
+    if (!name || !email || !message) {
+        status.textContent = 'Please fill in all fields.';
+        return;
+    }
+
+    const subject = encodeURIComponent('Portfolio Contact - ' + name);
+
+    const body = encodeURIComponent(
+        'Name: ' + name + '\n' +
+        'Email: ' + email + '\n\n' +
+        'Message:\n' + message
+    );
+
+    const gmailURL =
+        'https://mail.google.com/mail/?view=cm&fs=1' +
+        '&to=ruhulamin.prof@gmail.com' +
+        '&su=' + subject +
+        '&body=' + body;
+
+    window.location.assign(gmailURL);
+}
+
+</script>
+<script>
+
+function handleContactSubmit(event) {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+
+    if (!form.reportValidity()) return;
+
+    const name = form.querySelector('[name="name"]').value.trim();
+    const email = form.querySelector('[name="email"]').value.trim();
+    const message = form.querySelector('[name="message"]').value.trim();
+
+    const subject = encodeURIComponent(
+        `Portfolio Contact from ${name}`
+    );
+
+    const body = encodeURIComponent(
+        `Name: ${name}\n` +
+        `Email: ${email}\n\n` +
+        `Message:\n${message}`
+    );
+
+    const mailtoURL =
+        `mailto:ruhulamin.prof@gmail.com?subject=${subject}&body=${body}`;
+
+    window.location.href = mailtoURL;
+}
+
+</script>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Clock updater
+        function updateClock() {
+            const now = new Date();
+            const options = { weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+            document.getElementById('clock').textContent = now.toLocaleDateString('en-US', options);
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+
+
+
+
+
+
+        // Open MacBook Landing Animation
+        function openMacBook() {
+            const container = document.getElementById('macbook-container');
+            const landing = document.getElementById('landing-screen');
+            const desktop = document.getElementById('desktop-env');
+
+            container.classList.add('opened');
+            setTimeout(() => {
+                landing.style.display = 'none';
+                desktop.classList.remove('hidden');
+                setTimeout(() => {
+                    desktop.classList.remove('opacity-0');
+                    openApp('about');
+                    showToast('Welcome to Ruhul Amin\'s macOS Portfolio!');
+                }, 50);
+            }, 800);
+        }
+
+        // Window & App Management
+        const apps = ['about', 'projects', 'skills', 'terminal', 'contact', 'settings'];
+        let highestZIndex = 50;
+
+        function openApp(appName) {
+            const win = document.getElementById(`window-${appName}`);
+            const dot = document.getElementById(`dot-${appName}`);
+            if (win) {
+                win.classList.remove('minimized');
+                win.classList.add('open');
+                bringToFront(appName);
+                if (dot) dot.style.opacity = '1';
+            }
+        }
+
+        function closeApp(appName) {
+            const win = document.getElementById(`window-${appName}`);
+            const dot = document.getElementById(`dot-${appName}`);
+            if (win) {
+                win.classList.remove('open');
+                if (dot) dot.style.opacity = '0';
+            }
+        }
+
+        function minimizeApp(appName) {
+            const win = document.getElementById(`window-${appName}`);
+            if (win) {
+                win.classList.add('minimized');
+            }
+        }
+
+        function maximizeApp(windowId) {
+            const win = document.getElementById(windowId);
+            if (!win.dataset.maximized || win.dataset.maximized === 'false') {
+                win.dataset.prevWidth = win.style.width;
+                win.dataset.prevHeight = win.style.height;
+                win.dataset.prevTop = win.style.top;
+                win.dataset.prevLeft = win.style.left;
+                
+                win.style.width = '96vw';
+                win.style.height = '84vh';
+                win.style.top = '6vh';
+                win.style.left = '2vw';
+                win.dataset.maximized = 'true';
+            } else {
+                win.style.width = '';
+                win.style.height = '';
+                win.style.top = win.dataset.prevTop || '';
+                win.style.left = win.dataset.prevLeft || '';
+                win.dataset.maximized = 'false';
+            }
+        }
+
+        function bringToFront(appName) {
+            apps.forEach(app => {
+                const w = document.getElementById(`window-${app}`);
+                if (w) w.classList.remove('active-window');
+            });
+            const activeWin = document.getElementById(`window-${appName}`);
+            if (activeWin) {
+                highestZIndex++;
+                activeWin.style.zIndex = highestZIndex;
+                activeWin.classList.add('active-window');
+            }
+        }
+
+        // Apple Menu Toggle
+        function toggleAppleMenu(e) {
+            if (e) e.stopPropagation();
+            const menu = document.getElementById('apple-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        window.addEventListener('click', () => {
+            document.getElementById('apple-menu').classList.add('hidden');
+        });
+
+        // Toast Notifications
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').textContent = msg;
+            toast.classList.remove('-translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('-translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // Wallpaper Changer
+        function setWallpaper(num) {
+            const body = document.getElementById('main-body');
+            body.className = `wallpaper-${num} transition-colors duration-700`;
+            showToast(`Applied Wallpaper Theme #${num}`);
+        }
+
+        // Window Draggability
+        let activeDragWindow = null;
+        let dragOffsetX = 0;
+        let dragOffsetY = 0;
+
+        function startDrag(e, windowId) {
+            if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
+            activeDragWindow = document.getElementById(windowId);
+            bringToFront(windowId.replace('window-', ''));
+            const rect = activeDragWindow.getBoundingClientRect();
+            dragOffsetX = e.clientX - rect.left;
+            dragOffsetY = e.clientY - rect.top;
+            
+            document.addEventListener('mousemove', onDrag);
+            document.addEventListener('mouseup', stopDrag);
+        }
+
+        function onDrag(e) {
+            if (!activeDragWindow) return;
+            activeDragWindow.style.left = `${e.clientX - dragOffsetX}px`;
+            activeDragWindow.style.top = `${e.clientY - dragOffsetY}px`;
+        }
+
+        function stopDrag() {
+            activeDragWindow = null;
+            document.removeEventListener('mousemove', onDrag);
+            document.removeEventListener('mouseup', stopDrag);
+        }
+
+        // Terminal Interactive Commands
+        function handleTerminalCommand(e) {
+            if (e.key === 'Enter') {
+                const input = e.target;
+                const cmd = input.value.trim().toLowerCase();
+                const history = document.getElementById('terminal-history');
+                
+                const cmdDiv = document.createElement('div');
+                cmdDiv.innerHTML = `<span class="text-blue-400">ruhulamin.prof@gmail.com</span> <span class="text-neutral-500">~</span> <span class="text-white">%</span> ${input.value}`;
+                history.appendChild(cmdDiv);
+
+                const resDiv = document.createElement('div');
+                resDiv.className = 'text-neutral-300';
+
+                if (cmd === 'help') {
+                    resDiv.innerHTML = `Available commands:<br>
+                    &nbsp;&nbsp;<b class="text-yellow-400">about</b>    - View profile information<br>
+                    &nbsp;&nbsp;<b class="text-yellow-400">projects</b> - List featured projects<br>
+                    &nbsp;&nbsp;<b class="text-yellow-400">skills</b>   - Display technical stack<br>
+                    &nbsp;&nbsp;<b class="text-yellow-400">contact</b>  - Get contact details<br>
+                    &nbsp;&nbsp;<b class="text-yellow-400">clear</b>    - Clear terminal history<br>
+                    &nbsp;&nbsp;<b class="text-yellow-400">matrix</b>   - Start Matrix animation`;
+                } 
+else if (cmd === 'about') {
+    resDiv.textContent = 'Ruhul Amin - Full-Stack Web & Android Developer skilled in PHP, MySQL, ReactJS, and modern application development, with experience in software testing, debugging, and AI-assisted development.';
+} else if (cmd === 'projects') {
+    resDiv.textContent = 'Projects: Salon Booking System (NapitChai.com), Cinema Booking App, Bluetooth Call App, Catch Coins Game, Voice Assistant (Python), Broadcast Receiver System.';
+} else if (cmd === 'skills') {
+    resDiv.textContent = 'Tech Stack: PHP, MySQL, ReactJS, HTML5, CSS3, JavaScript, Java, Kotlin, Python, Dart, Android, Flutter, Firebase, Supabase, WordPress, GitHub, Postman, and Manual Software Testing.';
+} else if (cmd === 'contact') {
+    resDiv.textContent = 'GitHub: https://github.com/IRuhulAmin | Contact: ruhulamin.prof@gmail.com | Mobile: 01831330974';
+}
+ else if (cmd === 'clear') {
+                    history.innerHTML = '';
+                    input.value = '';
+                    return;
+                } else if (cmd === 'matrix') {
+                    resDiv.className = 'text-emerald-500 font-bold';
+                    resDiv.textContent = 'Wake up, Neo... The Matrix has you.';
+                    showToast('Matrix mode initiated');
+                } else if (cmd === '') {
+                    resDiv.textContent = '';
+                } else {
+                    resDiv.className = 'text-red-400';
+                    resDiv.textContent = `zsh: command not found: ${cmd}. Type 'help' for valid commands.`;
+                }
+
+                history.appendChild(resDiv);
+                input.value = '';
+                const termBody = document.getElementById('terminal-body');
+                termBody.scrollTop = termBody.scrollHeight;
+            }
+        }
+
+        // Contact Form Submission Handler
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            showToast('Message sent successfully! Alex will reply soon.');
+            e.target.reset();
+            closeApp('contact');
+        }
+    </script>
 </body>
-
 </html>
